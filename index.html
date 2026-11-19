@@ -1,0 +1,1687 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="DIAR S.r.l. — Rome, Italy">
+  <meta name="copyright" content="© 2026 DIAR S.r.l. - P.IVA 18748551001 - REA RM-1803784">
+  <meta name="theme-color" content="#050505">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="DIAR Mapping Studio">
+  <title>DIAR — Mapping Card Studio</title>
+  <!-- Favicon circolare DIAR incorporata direttamente nel file -->
+  <link id="diarFavicon" rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='96' fill='%23050505' stroke='%23ffffff' stroke-width='4'/%3E%3Cpath d='M 13 87 L 55 87 C 66 87 72 93 72 103 C 72 113 66 119 55 119 L 21 119 L 21 95 L 33 95 L 33 109 L 53 109 C 57 109 60 107 60 103 C 60 99 57 97 53 97 L 20 97 Z' fill='%23FFFFFF'/%3E%3Crect x='76' y='87' width='12' height='32' fill='%23FFFFFF'/%3E%3Cpolygon points='105,74 137,119 123,119 105,93 87,119 73,119' fill='%23800808'/%3E%3Cpath d='M 123 87 L 172 87 C 181 87 186 91 186 98 C 186 104 182 107 175 108 L 187 119 L 171 119 L 160 109 L 143 109 L 143 119 L 131 119 L 131 99 L 170 99 C 173 99 174 98 174 97 C 174 96 173 95 170 95 L 130 95 Z' fill='%23FFFFFF'/%3E%3C/svg%3E">
+  <link id="diarAppleIcon" rel="apple-touch-icon" href="">
+  <link id="diarManifest" rel="manifest" href="">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+    .font-mono-tech {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0a0a0a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #262626;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #404040;
+    }
+    input[type="range"] {
+      accent-color: #b91c1c;
+    }
+  </style>
+</head>
+<body class="bg-neutral-950 text-neutral-100 min-h-screen flex flex-col lg:h-screen lg:overflow-hidden selection:bg-red-900 selection:text-white">
+
+  <!-- Barra Superiore Regia Video -->
+  <header id="_0xdiar_hdr" class="w-full bg-neutral-900/95 border-b border-neutral-800 px-4 py-3 flex flex-wrap items-center justify-between gap-3 shrink-0 z-10">
+    <div class="flex items-center gap-3">
+      <!-- Emblema circolare DIAR -->
+      <div class="w-9 h-9 rounded-full bg-black border border-neutral-600 flex items-center justify-center shadow-md shrink-0 overflow-hidden">
+        <svg class="w-full h-full" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="96" fill="#050505" stroke="#ffffff" stroke-width="3" stroke-opacity="0.35"/>
+          <path d="M 13 87 L 55 87 C 66 87 72 93 72 103 C 72 113 66 119 55 119 L 21 119 L 21 95 L 33 95 L 33 109 L 53 109 C 57 109 60 107 60 103 C 60 99 57 97 53 97 L 20 97 Z" fill="#FFFFFF"/>
+          <rect x="76" y="87" width="12" height="32" fill="#FFFFFF"/>
+          <polygon points="105,74 137,119 123,119 105,93 87,119 73,119" fill="#800808"/>
+          <path d="M 123 87 L 172 87 C 181 87 186 91 186 98 C 186 104 182 107 175 108 L 187 119 L 171 119 L 160 109 L 143 109 L 143 119 L 131 119 L 131 99 L 170 99 C 173 99 174 98 174 97 C 174 96 173 95 170 95 L 130 95 Z" fill="#FFFFFF"/>
+        </svg>
+      </div>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="text-base sm:text-lg font-bold tracking-tight text-white">Mapping Card Studio</h1>
+          <span class="text-[10px] font-mono-tech uppercase px-1.5 py-0.5 rounded bg-red-950 text-red-400 border border-red-800/60">DIAR Precision</span>
+        </div>
+        <p data-i18n="subtitle" class="text-xs text-neutral-400 hidden sm:block">Calibrazione pixel-perfect multi-formato, SVG vettoriale e controllo loghi per cella</p>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+      <!-- Selettore Lingua Auto / EN / IT -->
+      <div class="flex items-center bg-neutral-950 border border-neutral-800 rounded-lg p-0.5 text-xs font-mono-tech">
+        <button id="langItBtn" type="button" class="px-2 py-1 rounded-md transition-colors cursor-pointer">IT</button>
+        <button id="langEnBtn" type="button" class="px-2 py-1 rounded-md transition-colors cursor-pointer">EN</button>
+      </div>
+
+      <div id="badgeInfo" class="font-mono-tech text-xs bg-neutral-950 border border-neutral-800 px-3 py-1.5 rounded-lg text-neutral-300">
+        3840 × 2160 px | 16:9 | 16×9
+      </div>
+      <button id="installAppBtn" type="button" class="hidden bg-neutral-900 hover:bg-neutral-800 text-emerald-400 font-semibold rounded-lg px-3 py-2 text-xs sm:text-sm border border-emerald-700/60 transition-all flex items-center gap-1.5 cursor-pointer">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        <span data-i18n="btnInstall">Installa App</span>
+      </button>
+      <button id="downloadSvgBtn" type="button" class="bg-neutral-800 hover:bg-neutral-700 active:bg-neutral-900 text-neutral-100 font-medium rounded-lg px-3.5 py-2 text-xs sm:text-sm border border-neutral-700 transition-all flex items-center gap-1.5 cursor-pointer">
+        <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/>
+        </svg>
+        <span data-i18n="btnSvg">Scarica SVG</span>
+      </button>
+      <button id="downloadPngBtn" type="button" class="bg-red-800 hover:bg-red-700 active:bg-red-900 text-white font-semibold rounded-lg px-4 py-2 text-xs sm:text-sm shadow-lg shadow-red-950/60 border border-red-700/70 transition-all flex items-center gap-1.5 cursor-pointer">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2M7 10l5 5m0 0l5-5m-5 5V3"/>
+        </svg>
+        <span data-i18n="btnPng">Scarica PNG</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Layout Principale: Sidebar Controlli + Viewport Canvas -->
+  <div class="flex-1 flex flex-col lg:flex-row overflow-hidden">
+
+    <!-- Pannello Controlli Laterale -->
+    <aside class="w-full lg:w-96 bg-neutral-900/70 border-b lg:border-b-0 lg:border-r border-neutral-800 p-4 overflow-y-auto shrink-0 space-y-5">
+
+      <!-- 1. Formato & Risoluzione -->
+      <div class="space-y-3 pb-4 border-b border-neutral-800/80">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-neutral-400 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-red-600"></span>
+          <span data-i18n="sec1">1. Formato & Risoluzione</span>
+        </h2>
+
+        <div class="grid grid-cols-1 gap-2.5">
+          <div>
+            <label for="aspectPreset" data-i18n="lblAspect" class="block text-xs text-neutral-400 mb-1">Aspect Ratio / Formato</label>
+            <select id="aspectPreset" class="w-full bg-neutral-950 text-white border border-neutral-700 focus:border-red-600 focus:outline-none rounded-lg px-3 py-2 text-xs font-medium cursor-pointer">
+              <option value="16:9_h" selected>16:9 Horizontal (Widescreen)</option>
+              <option value="16:9_v">16:9 Vertical (Portrait / Totem)</option>
+              <option value="1:1">1:1 Square (Ledwall)</option>
+              <option value="4:3">4:3 Standard (Classic Projection)</option>
+              <option value="16:10">16:10 WUXGA (Broadcast Projectors)</option>
+              <option value="custom">Custom (Width × Height)</option>
+            </select>
+          </div>
+
+          <div id="resolutionPresetWrap">
+            <label for="resolutionPreset" data-i18n="lblResPreset" class="block text-xs text-neutral-400 mb-1">Risoluzione Preimpostata</label>
+            <select id="resolutionPreset" class="w-full bg-neutral-950 text-white border border-neutral-700 focus:border-red-600 focus:outline-none rounded-lg px-3 py-2 text-xs font-mono-tech cursor-pointer">
+            </select>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label for="customWidth" data-i18n="lblWidth" class="block text-[11px] text-neutral-400 mb-1">Larghezza (px)</label>
+              <input type="number" id="customWidth" min="128" max="8192" step="1" value="3840" class="w-full bg-neutral-950 text-white border border-neutral-700 focus:border-red-600 focus:outline-none rounded-lg px-2.5 py-1.5 text-xs font-mono-tech">
+            </div>
+            <div>
+              <label for="customHeight" data-i18n="lblHeight" class="block text-[11px] text-neutral-400 mb-1">Altezza (px)</label>
+              <input type="number" id="customHeight" min="128" max="8192" step="1" value="2160" class="w-full bg-neutral-950 text-white border border-neutral-700 focus:border-red-600 focus:outline-none rounded-lg px-2.5 py-1.5 text-xs font-mono-tech">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Suddivisione Griglia -->
+      <div class="space-y-3 pb-4 border-b border-neutral-800/80">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-neutral-400 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+            <span data-i18n="sec2">2. Suddivisione Griglia</span>
+          </h2>
+          <label class="flex items-center gap-1.5 text-xs text-neutral-300 cursor-pointer">
+            <input type="checkbox" id="autoGridToggle" checked class="rounded bg-neutral-950 border-neutral-700 text-red-600 focus:ring-0">
+            <span data-i18n="lblAutoRatio">Auto-proporzione</span>
+          </label>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <div class="flex justify-between text-[11px] text-neutral-400 mb-1">
+              <span data-i18n="lblCols">Colonne (A..AF)</span>
+              <span id="colsVal" class="font-mono-tech text-white font-bold">16</span>
+            </div>
+            <input type="range" id="colsInput" min="4" max="32" value="16" class="w-full cursor-pointer">
+          </div>
+          <div>
+            <div class="flex justify-between text-[11px] text-neutral-400 mb-1">
+              <span data-i18n="lblRows">Righe (1..32)</span>
+              <span id="rowsVal" class="font-mono-tech text-white font-bold">9</span>
+            </div>
+            <input type="range" id="rowsInput" min="4" max="32" value="9" class="w-full cursor-pointer">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label for="subGrid" data-i18n="lblSubGrid" class="block text-[11px] text-neutral-400 mb-1">Sottogriglia Cella</label>
+            <select id="subGrid" class="w-full bg-neutral-950 text-white border border-neutral-700 focus:border-red-600 focus:outline-none rounded-lg px-2.5 py-1.5 text-xs cursor-pointer">
+              <option value="0" selected>None</option>
+              <option value="2">2 × 2 Dashed</option>
+              <option value="4">4 × 4 Dashed</option>
+            </select>
+          </div>
+          <div>
+            <label for="lineThickness" data-i18n="lblThickness" class="block text-[11px] text-neutral-400 mb-1">Spessore Linee</label>
+            <select id="lineThickness" class="w-full bg-neutral-950 text-white border border-neutral-700 focus:border-red-600 focus:outline-none rounded-lg px-2.5 py-1.5 text-xs cursor-pointer">
+              <option value="1" selected>1 px (Ultra Fine)</option>
+              <option value="2">2 px (Standard)</option>
+              <option value="3">3 px (Long Throw)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Identità & Logo DIAR (Ancorato) -->
+      <div class="space-y-3 pb-4 border-b border-neutral-800/80">
+        <div class="flex items-center justify-between">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-neutral-400 flex items-center gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+            <span data-i18n="sec3">3. Marchio & Logo DIAR</span>
+          </h2>
+          <button id="resetCustomLogoCells" type="button" data-i18n="btnResetCells" class="text-[11px] text-red-400 hover:text-red-300 underline cursor-pointer hidden">Reset celle</button>
+        </div>
+
+        <div class="grid grid-cols-1 gap-2.5">
+          <div>
+            <label for="logoPlacement" data-i18n="lblPlacement" class="block text-xs text-neutral-400 mb-1">Distribuzione (Centro DIAR ancorato)</label>
+            <select id="logoPlacement" class="w-full bg-neutral-950 text-white border border-neutral-700 focus:border-red-600 focus:outline-none rounded-lg px-3 py-2 text-xs cursor-pointer">
+              <option value="center_quads" selected>Center + 4 Quadrants</option>
+              <option value="center">Center Anchor Only</option>
+              <option value="corners">Center + 4 Corners</option>
+              <option value="every_4">Regular Pattern (Every 4 cells)</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="logoMode" data-i18n="lblLogoMode" class="block text-xs text-neutral-400 mb-1">Finitura Emblema DIAR</label>
+            <select id="logoMode" class="w-full bg-neutral-950 text-white border border-neutral-700 focus:border-red-600 focus:outline-none rounded-lg px-3 py-2 text-xs cursor-pointer">
+              <option value="stroke" selected>DIAR Black Badge + Thin White Border</option>
+              <option value="glow">DIAR Black Badge + Luminous Glow</option>
+              <option value="pure">DIAR Original Black Badge (No Border)</option>
+              <option value="white">High-Contrast Monochrome White</option>
+            </select>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2.5">
+            <div>
+              <div class="flex justify-between text-[11px] text-neutral-400 mb-1">
+                <span data-i18n="lblLogoSize">Dimensione</span>
+                <span id="logoScaleVal" class="font-mono-tech text-white">76%</span>
+              </div>
+              <input type="range" id="logoScale" min="45" max="95" value="76" class="w-full cursor-pointer">
+            </div>
+            <div>
+              <div class="flex justify-between text-[11px] text-neutral-400 mb-1">
+                <span data-i18n="lblLogoOpacity">Opacità</span>
+                <span id="logoOpacityVal" class="font-mono-tech text-white">100%</span>
+              </div>
+              <input type="range" id="logoOpacity" min="50" max="100" value="100" class="w-full cursor-pointer">
+            </div>
+          </div>
+
+          <!-- Badge stato marchio protetto -->
+          <div class="bg-neutral-950/90 border border-neutral-800 rounded-lg px-3 py-2 flex items-center justify-between">
+            <span data-i18n="lblBrandLock" class="text-[11px] text-neutral-400">Identità DIAR: Ancoraggio centrale attivo</span>
+            <span class="text-[10px] font-mono-tech text-red-400 font-semibold">LOCKED</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Stile & Strumenti Ottici -->
+      <div class="space-y-3">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-neutral-400 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+          <span data-i18n="sec4">4. Stile & Strumenti Ottici</span>
+        </h2>
+
+        <div>
+          <label for="bgStyle" data-i18n="lblBgStyle" class="block text-xs text-neutral-400 mb-1">Tema Cromatico Cella</label>
+          <select id="bgStyle" class="w-full bg-neutral-950 text-white border border-neutral-700 focus:border-red-600 focus:outline-none rounded-lg px-3 py-2 text-xs cursor-pointer">
+            <option value="color" selected>Calibrated Multicolor Checkerboard</option>
+            <option value="grayscale">Technical Grayscale (IRE)</option>
+            <option value="dark">Pure Black Background (Grid & Labels)</option>
+            <option value="light">Pure White Background (Luminance Test)</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 pt-1 text-xs text-neutral-300">
+          <label class="flex items-center gap-2 bg-neutral-950/70 p-2 rounded-lg border border-neutral-800/80 cursor-pointer">
+            <input type="checkbox" id="optDiagonals" checked class="rounded bg-neutral-900 border-neutral-700 text-red-600 focus:ring-0">
+            <span data-i18n="optDiag">Diagonali</span>
+          </label>
+          <label class="flex items-center gap-2 bg-neutral-950/70 p-2 rounded-lg border border-neutral-800/80 cursor-pointer">
+            <input type="checkbox" id="optAxes" checked class="rounded bg-neutral-900 border-neutral-700 text-red-600 focus:ring-0">
+            <span data-i18n="optAxes">Assi Centrali</span>
+          </label>
+          <label class="flex items-center gap-2 bg-neutral-950/70 p-2 rounded-lg border border-neutral-800/80 cursor-pointer">
+            <input type="checkbox" id="optTargets" checked class="rounded bg-neutral-900 border-neutral-700 text-red-600 focus:ring-0">
+            <span data-i18n="optTargets">Mirini Circolari</span>
+          </label>
+          <label class="flex items-center gap-2 bg-neutral-950/70 p-2 rounded-lg border border-neutral-800/80 cursor-pointer">
+            <input type="checkbox" id="optRuler" checked class="rounded bg-neutral-900 border-neutral-700 text-red-600 focus:ring-0">
+            <span data-i18n="optRuler">Righello px</span>
+          </label>
+          <label class="flex items-center gap-2 bg-neutral-950/70 p-2 rounded-lg border border-neutral-800/80 cursor-pointer col-span-2">
+            <input type="checkbox" id="optInfoBox" checked class="rounded bg-neutral-900 border-neutral-700 text-red-600 focus:ring-0">
+            <span data-i18n="optInfo">Targhetta Info Tecniche (Risoluzione / DIAR)</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Crediti Ideazione & Export Desktop -->
+      <div class="pt-3 border-t border-neutral-800/60 space-y-2.5">
+        <div id="desktopDistributionBox" class="space-y-2">
+          <button id="downloadAllInOneZipBtn" type="button" class="hidden w-full bg-gradient-to-r from-red-900 to-red-800 hover:from-red-800 hover:to-red-700 text-white font-semibold border border-red-600/70 rounded-lg px-3 py-2.5 text-xs flex items-center justify-center gap-2 shadow-lg shadow-red-950/60 transition-all cursor-pointer">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+            </svg>
+            <span data-i18n="btnFullRelease">Scarica Pacchetto Completo (.ZIP)</span>
+          </button>
+          <div class="grid grid-cols-2 gap-2">
+            <button id="downloadWinPkgBtn" type="button" class="bg-neutral-950 hover:bg-neutral-900 text-neutral-200 hover:text-white border border-neutral-800 hover:border-neutral-600 rounded-lg px-2.5 py-2 text-[11px] font-mono-tech flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+              <span class="w-2 h-2 rounded-full bg-sky-500"></span>
+              <span data-i18n="btnWinPkg">Pacchetto Windows</span>
+            </button>
+            <button id="downloadMacPkgBtn" type="button" class="bg-neutral-950 hover:bg-neutral-900 text-neutral-200 hover:text-white border border-neutral-800 hover:border-neutral-600 rounded-lg px-2.5 py-2 text-[11px] font-mono-tech flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+              <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+              <span data-i18n="btnMacPkg">Pacchetto macOS</span>
+            </button>
+          </div>
+          <button id="downloadIcoBtn" type="button" class="w-full bg-neutral-950 hover:bg-neutral-900 text-neutral-400 hover:text-white border border-neutral-800/80 rounded-lg px-3 py-1.5 text-[11px] font-mono-tech flex items-center justify-center gap-2 transition-colors cursor-pointer">
+            <span class="w-1.5 h-1.5 rounded-full bg-red-700"></span>
+            <span data-i18n="btnIco">Solo Icona Windows (.ICO)</span>
+          </button>
+        </div>
+        <div class="bg-neutral-950/70 border border-neutral-800/70 rounded-lg p-2.5 text-[10px] text-neutral-400 font-mono-tech space-y-0.5 leading-relaxed">
+          <div class="text-neutral-200 font-bold flex items-center justify-between">
+            <span>© 2026 DIAR S.r.l. — Rome, Italy</span>
+            <span class="text-red-400">FREE TOOL</span>
+          </div>
+          <div>P.IVA / C.F. 18748551001 · REA RM-1803784</div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- Area Anteprima Canvas Centrata -->
+    <main class="flex-1 flex flex-col bg-[#070707] relative overflow-hidden">
+      
+      <!-- Barra stato superiore viewport -->
+      <div class="w-full px-4 py-2 bg-neutral-900/40 border-b border-neutral-800/60 flex flex-wrap items-center justify-between gap-2 text-xs text-neutral-400 shrink-0">
+        <div class="flex items-center gap-2">
+          <span class="inline-block w-2 h-2 rounded-full bg-emerald-500"></span>
+          <span data-i18n="tipCanvas">Suggerimento: <strong class="text-neutral-200">clicca su qualsiasi cella</strong> nell'anteprima per aggiungere o rimuovere repliche del logo DIAR.</span>
+        </div>
+        <div class="flex items-center gap-3 font-mono-tech">
+          <span id="hoverCellInfo" class="text-neutral-300">Cell: -- | Pixel: --, --</span>
+          <span id="statusMsg" data-i18n="exported" class="text-emerald-400 font-semibold hidden">Esportato!</span>
+        </div>
+      </div>
+
+      <!-- Contenitore adattivo del Canvas -->
+      <div id="canvasViewport" class="flex-1 w-full h-full p-4 sm:p-6 flex items-center justify-center overflow-auto">
+        <canvas id="mappingCanvas" class="max-w-full max-h-full w-auto h-auto object-contain shadow-[0_0_50px_rgba(0,0,0,0.95)] border border-neutral-700 cursor-crosshair bg-black"></canvas>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Motore Protetto & Localizzazione (IT/EN Auto) -->
+  <script>
+    (function(_0x4d1a, _0x9e2b) {
+      "use strict";
+
+      // Dizionario bilingue IT / EN
+      const _i18n = {
+        it: {
+          subtitle: "Calibrazione pixel-perfect multi-formato, SVG vettoriale e controllo loghi per cella",
+          btnInstall: "Installa App",
+          btnFullRelease: "Scarica Pacchetto Completo (.ZIP)",
+          btnWinPkg: "Pacchetto Windows",
+          btnMacPkg: "Pacchetto macOS",
+          btnIco: "Solo Icona Windows (.ICO)",
+          btnSvg: "Scarica SVG",
+          btnPng: "Scarica PNG",
+          sec1: "1. Formato & Risoluzione",
+          lblAspect: "Aspect Ratio / Formato",
+          lblResPreset: "Risoluzione Preimpostata",
+          lblWidth: "Larghezza (px)",
+          lblHeight: "Altezza (px)",
+          sec2: "2. Suddivisione Griglia",
+          lblAutoRatio: "Auto-proporzione",
+          lblCols: "Colonne (A..AF)",
+          lblRows: "Righe (1..32)",
+          lblSubGrid: "Sottogriglia Cella",
+          lblThickness: "Spessore Linee",
+          sec3: "3. Marchio & Logo DIAR",
+          btnResetCells: "Reset celle",
+          lblPlacement: "Distribuzione (Centro DIAR ancorato)",
+          lblLogoMode: "Finitura Emblema DIAR",
+          lblLogoSize: "Dimensione",
+          lblLogoOpacity: "Opacità",
+          lblBrandLock: "Identità DIAR: Ancoraggio centrale attivo",
+          sec4: "4. Stile & Strumenti Ottici",
+          lblBgStyle: "Tema Cromatico Cella",
+          optDiag: "Diagonali",
+          optAxes: "Assi Centrali",
+          optTargets: "Mirini Circolari",
+          optRuler: "Righello px",
+          optInfo: "Targhetta Info Tecniche (Risoluzione / DIAR)",
+          tipCanvas: 'Suggerimento: <strong class="text-neutral-200">clicca su qualsiasi cella</strong> nell\'anteprima per aggiungere o rimuovere repliche del logo DIAR.',
+          exported: "Esportato!",
+          cellWord: "Cella",
+          aspectOpts: {
+            "16:9_h": "16:9 Orizzontale (Widescreen)",
+            "16:9_v": "16:9 Verticale (Portrait / Totem)",
+            "1:1": "1:1 Quadrato (Ledwall)",
+            "4:3": "4:3 Standard (Proiezione Classica)",
+            "16:10": "16:10 WUXGA (Proiettori Broadcast)",
+            "custom": "Personalizzato (Larghezza × Altezza)"
+          },
+          subOpts: { "0": "Nessuna", "2": "2 × 2 Tratteggiata", "4": "4 × 4 Tratteggiata" },
+          thickOpts: { "1": "1 px (Ultra Fine)", "2": "2 px (Standard)", "3": "3 px (Lunga Distanza)" },
+          placeOpts: {
+            "center_quads": "Centro + 4 Quadranti",
+            "center": "Solo Ancoraggio Centrale",
+            "corners": "Centro + 4 Angoli",
+            "every_4": "Pattern Regolare (Ogni 4 celle)"
+          },
+          modeOpts: {
+            "stroke": "Badge Nero DIAR + Bordo Bianco Sottile",
+            "glow": "Badge Nero DIAR + Alone Luminoso",
+            "pure": "Badge Nero DIAR Originale (Senza Bordo)",
+            "white": "Variante Monocromatica Bianco Puro"
+          },
+          bgOpts: {
+            "color": "Scacchiera Multicolore Calibrata",
+            "grayscale": "Scala di Grigi Tecnica (IRE)",
+            "dark": "Sfondo Nero Puro (Solo Griglia & Testo)",
+            "light": "Sfondo Bianco Puro (Test Luminosità)"
+          }
+        },
+        en: {
+          subtitle: "Pixel-perfect multi-format calibration, pure vector SVG & per-cell brand anchor",
+          btnInstall: "Install App",
+          btnFullRelease: "Download Full Release (.ZIP)",
+          btnWinPkg: "Windows Package",
+          btnMacPkg: "macOS Package",
+          btnIco: "Windows Icon Only (.ICO)",
+          btnSvg: "Download SVG",
+          btnPng: "Download PNG",
+          sec1: "1. Format & Resolution",
+          lblAspect: "Aspect Ratio / Format",
+          lblResPreset: "Resolution Preset",
+          lblWidth: "Width (px)",
+          lblHeight: "Height (px)",
+          sec2: "2. Grid Subdivision",
+          lblAutoRatio: "Auto-proportion",
+          lblCols: "Columns (A..AF)",
+          lblRows: "Rows (1..32)",
+          lblSubGrid: "Cell Sub-Grid",
+          lblThickness: "Line Thickness",
+          sec3: "3. DIAR Brand & Logo",
+          btnResetCells: "Reset cells",
+          lblPlacement: "Distribution (Center DIAR anchored)",
+          lblLogoMode: "DIAR Emblem Finish",
+          lblLogoSize: "Size",
+          lblLogoOpacity: "Opacity",
+          lblBrandLock: "DIAR Identity: Center anchor locked",
+          sec4: "4. Style & Optical Tools",
+          lblBgStyle: "Cell Color Theme",
+          optDiag: "Diagonals",
+          optAxes: "Center Axes",
+          optTargets: "Circular Targets",
+          optRuler: "Pixel Ruler",
+          optInfo: "Technical Info Badge (Resolution / DIAR)",
+          tipCanvas: 'Tip: <strong class="text-neutral-200">click any cell</strong> on the preview canvas to add or remove extra DIAR logo markers.',
+          exported: "Exported!",
+          cellWord: "Cell",
+          aspectOpts: {
+            "16:9_h": "16:9 Horizontal (Widescreen)",
+            "16:9_v": "16:9 Vertical (Portrait / Totem)",
+            "1:1": "1:1 Square (Ledwall)",
+            "4:3": "4:3 Standard (Classic Projection)",
+            "16:10": "16:10 WUXGA (Broadcast Projectors)",
+            "custom": "Custom (Width × Height)"
+          },
+          subOpts: { "0": "None", "2": "2 × 2 Dashed", "4": "4 × 4 Dashed" },
+          thickOpts: { "1": "1 px (Ultra Fine)", "2": "2 px (Standard)", "3": "3 px (Long Throw)" },
+          placeOpts: {
+            "center_quads": "Center + 4 Quadrants",
+            "center": "Center Anchor Only",
+            "corners": "Center + 4 Corners",
+            "every_4": "Regular Pattern (Every 4 cells)"
+          },
+          modeOpts: {
+            "stroke": "DIAR Black Badge + Thin White Border",
+            "glow": "DIAR Black Badge + Luminous Glow",
+            "pure": "DIAR Original Black Badge (No Border)",
+            "white": "High-Contrast Monochrome White"
+          },
+          bgOpts: {
+            "color": "Calibrated Multicolor Checkerboard",
+            "grayscale": "Technical Grayscale (IRE)",
+            "dark": "Pure Black Background (Grid & Labels)",
+            "light": "Pure White Background (Luminance Test)"
+          }
+        }
+      };
+
+      // Rilevamento automatico lingua browser (IT se italiano, altrimenti EN tradizionale)
+      const _browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+      let _currentLang = _browserLang.startsWith('it') ? 'it' : 'en';
+
+      function _applyLanguage(lang) {
+        _currentLang = lang;
+        document.documentElement.lang = lang;
+        const dict = _i18n[lang];
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (dict[key]) {
+            if (key === 'tipCanvas') {
+              el.innerHTML = dict[key];
+            } else {
+              el.textContent = dict[key];
+            }
+          }
+        });
+
+        const selectMaps = [
+          ['aspectPreset', dict.aspectOpts],
+          ['subGrid', dict.subOpts],
+          ['lineThickness', dict.thickOpts],
+          ['logoPlacement', dict.placeOpts],
+          ['logoMode', dict.modeOpts],
+          ['bgStyle', dict.bgOpts]
+        ];
+        selectMaps.forEach(([id, map]) => {
+          const sel = document.getElementById(id);
+          if (!sel) return;
+          Array.from(sel.options).forEach(opt => {
+            if (map[opt.value]) opt.textContent = map[opt.value];
+          });
+        });
+
+        // Stile pulsanti lingua
+        const itBtn = document.getElementById('langItBtn');
+        const enBtn = document.getElementById('langEnBtn');
+        if (lang === 'it') {
+          itBtn.className = 'px-2 py-1 rounded-md bg-red-800 text-white font-bold cursor-pointer';
+          enBtn.className = 'px-2 py-1 rounded-md text-neutral-400 hover:text-white cursor-pointer';
+        } else {
+          enBtn.className = 'px-2 py-1 rounded-md bg-red-800 text-white font-bold cursor-pointer';
+          itBtn.className = 'px-2 py-1 rounded-md text-neutral-400 hover:text-white cursor-pointer';
+        }
+
+        document.getElementById('hoverCellInfo').textContent = `${dict.cellWord}: -- | Pixel: --, --`;
+      }
+
+      const canvas = document.getElementById('mappingCanvas');
+      const ctx = canvas.getContext('2d');
+
+      // Firma di integrità DIAR codificata
+      const _sigBytes = [68, 73, 65, 82, 32, 77, 65, 80, 80, 73, 78, 71, 32, 83, 84, 85, 68, 73, 79];
+      const _brandTag = String.fromCharCode(..._sigBytes);
+
+      const formatConfigs = {
+        '16:9_h': {
+          defaultCols: 16, defaultRows: 9,
+          resolutions: [
+            { label: '4K UHD (3840 × 2160)', w: 3840, h: 2160 },
+            { label: 'Full HD (1920 × 1080)', w: 1920, h: 1080 },
+            { label: 'QHD (2560 × 1440)', w: 2560, h: 1440 },
+            { label: 'HD (1280 × 720)', w: 1280, h: 720 }
+          ]
+        },
+        '16:9_v': {
+          defaultCols: 9, defaultRows: 16,
+          resolutions: [
+            { label: 'Full HD Portrait (1080 × 1920)', w: 1080, h: 1920 },
+            { label: '4K UHD Portrait (2160 × 3840)', w: 2160, h: 3840 },
+            { label: 'HD Portrait (720 × 1280)', w: 720, h: 1280 }
+          ]
+        },
+        '1:1': {
+          defaultCols: 12, defaultRows: 12,
+          resolutions: [
+            { label: '2K Square (2048 × 2048)', w: 2048, h: 2048 },
+            { label: 'Full HD Square (1080 × 1080)', w: 1080, h: 1080 },
+            { label: '4K Square (4096 × 4096)', w: 4096, h: 4096 }
+          ]
+        },
+        '4:3': {
+          defaultCols: 12, defaultRows: 9,
+          resolutions: [
+            { label: 'UXGA (1600 × 1200)', w: 1600, h: 1200 },
+            { label: 'QXGA (2048 × 1536)', w: 2048, h: 1536 },
+            { label: 'XGA (1024 × 768)', w: 1024, h: 768 }
+          ]
+        },
+        '16:10': {
+          defaultCols: 16, defaultRows: 10,
+          resolutions: [
+            { label: 'WUXGA (1920 × 1200)', w: 1920, h: 1200 },
+            { label: 'WQXGA (2560 × 1600)', w: 2560, h: 1600 },
+            { label: '4K 16:10 (3840 × 2400)', w: 3840, h: 2400 }
+          ]
+        },
+        'custom': { defaultCols: 16, defaultRows: 9, resolutions: [] }
+      };
+
+      const colorPalette = ['#00B4D8', '#D90429', '#2B9348', '#FFB703', '#8338EC', '#3A86FF', '#FB5607', '#FF006E'];
+      const grayPalette = ['#262626', '#404040', '#595959', '#737373', '#8C8C8C', '#A6A6A6', '#BFBFBF', '#D9D9D9'];
+
+      let customToggledCells = new Set();
+
+      function gcd(a, b) {
+        return b === 0 ? a : gcd(b, a % b);
+      }
+
+      function getColumnLabel(index) {
+        let label = '';
+        let n = index;
+        while (n >= 0) {
+          label = String.fromCharCode((n % 26) + 65) + label;
+          n = Math.floor(n / 26) - 1;
+        }
+        return label;
+      }
+
+      function updateResetButtonVisibility() {
+        const btn = document.getElementById('resetCustomLogoCells');
+        btn.classList.toggle('hidden', customToggledCells.size === 0);
+      }
+
+      // Calcola le celle ancorate obbligatorie (centro)
+      function getAnchoredCenterCells(cols, rows) {
+        const anchors = new Set();
+        const midC = Math.floor(cols / 2);
+        const midR = Math.floor(rows / 2);
+        anchors.add(`${midC}-${midR}`);
+        if (cols % 2 === 0) anchors.add(`${midC - 1}-${midR}`);
+        if (rows % 2 === 0) anchors.add(`${midC}-${midR - 1}`);
+        if (cols % 2 === 0 && rows % 2 === 0) anchors.add(`${midC - 1}-${midR - 1}`);
+        return anchors;
+      }
+
+      function getActiveLogoCells(cols, rows) {
+        const placement = document.getElementById('logoPlacement').value;
+        const anchors = getAnchoredCenterCells(cols, rows);
+        const active = new Set(anchors);
+
+        if (placement === 'center_quads') {
+          const qC1 = Math.max(1, Math.floor(cols * 0.2));
+          const qC2 = Math.min(cols - 2, Math.floor(cols * 0.8));
+          const qR1 = Math.max(1, Math.floor(rows * 0.2));
+          const qR2 = Math.min(rows - 2, Math.floor(rows * 0.8));
+          active.add(`${qC1}-${qR1}`);
+          active.add(`${qC2}-${qR1}`);
+          active.add(`${qC1}-${qR2}`);
+          active.add(`${qC2}-${qR2}`);
+        } else if (placement === 'corners') {
+          active.add(`0-0`);
+          active.add(`${cols - 1}-0`);
+          active.add(`0-${rows - 1}`);
+          active.add(`${cols - 1}-${rows - 1}`);
+        } else if (placement === 'every_4') {
+          for (let r = 1; r < rows; r += 4) {
+            for (let c = 1; c < cols; c += 4) {
+              active.add(`${c}-${r}`);
+            }
+          }
+        }
+
+        customToggledCells.forEach(key => {
+          if (anchors.has(key)) return; // L'ancoraggio centrale DIAR resta protetto
+          if (active.has(key)) active.delete(key);
+          else active.add(key);
+        });
+
+        // Garanzia integrità: almeno l'ancoraggio centrale è sempre presente
+        anchors.forEach(k => active.add(k));
+        return active;
+      }
+
+      function updateFormatUI() {
+        const presetKey = document.getElementById('aspectPreset').value;
+        const config = formatConfigs[presetKey];
+        const resWrap = document.getElementById('resolutionPresetWrap');
+        const resSelect = document.getElementById('resolutionPreset');
+
+        if (presetKey === 'custom') {
+          resWrap.classList.add('hidden');
+        } else {
+          resWrap.classList.remove('hidden');
+          resSelect.innerHTML = '';
+          config.resolutions.forEach((res, idx) => {
+            const opt = document.createElement('option');
+            opt.value = `${res.w}x${res.h}`;
+            opt.textContent = res.label;
+            if (idx === 0) opt.selected = true;
+            resSelect.appendChild(opt);
+          });
+
+          const firstRes = config.resolutions[0];
+          document.getElementById('customWidth').value = firstRes.w;
+          document.getElementById('customHeight').value = firstRes.h;
+
+          if (document.getElementById('autoGridToggle').checked) {
+            document.getElementById('colsInput').value = config.defaultCols;
+            document.getElementById('rowsInput').value = config.defaultRows;
+            document.getElementById('colsVal').textContent = config.defaultCols;
+            document.getElementById('rowsVal').textContent = config.defaultRows;
+          }
+        }
+        renderAll();
+      }
+
+      // Rendering vettoriale nativo dell'emblema circolare DIAR
+      function _renderDiarEmblem(ctx, cx, cy, size, mode, opacity) {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0.5, opacity);
+        ctx.translate(cx, cy);
+
+        const radius = size * 0.5;
+        const s = size / 200;
+
+        if (mode === 'glow') {
+          ctx.shadowColor = 'rgba(255, 255, 255, 0.85)';
+          ctx.shadowBlur = size * 0.18;
+        }
+
+        ctx.beginPath();
+        ctx.arc(0, 0, radius, 0, Math.PI * 2);
+        if (mode === 'white') {
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.14)';
+          ctx.fill();
+          ctx.lineWidth = Math.max(1.5, size * 0.02);
+          ctx.strokeStyle = '#FFFFFF';
+          ctx.stroke();
+        } else {
+          ctx.fillStyle = '#050505';
+          ctx.fill();
+          ctx.shadowBlur = 0;
+          if (mode === 'stroke' || mode === 'glow') {
+            ctx.lineWidth = Math.max(1.5, size * 0.022);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.88)';
+            ctx.stroke();
+          }
+        }
+
+        ctx.shadowBlur = 0;
+        ctx.scale(s, s);
+        ctx.translate(-100, -100);
+
+        const crimsonColor = mode === 'white' ? '#FFFFFF' : '#800808';
+
+        // D
+        ctx.fillStyle = '#FFFFFF';
+        ctx.beginPath();
+        ctx.moveTo(13, 87); ctx.lineTo(55, 87);
+        ctx.bezierCurveTo(66, 87, 72, 93, 72, 103);
+        ctx.bezierCurveTo(72, 113, 66, 119, 55, 119);
+        ctx.lineTo(21, 119); ctx.lineTo(21, 95); ctx.lineTo(33, 95); ctx.lineTo(33, 109);
+        ctx.lineTo(53, 109);
+        ctx.bezierCurveTo(57, 109, 60, 107, 60, 103);
+        ctx.bezierCurveTo(60, 99, 57, 97, 53, 97);
+        ctx.lineTo(20, 97); ctx.closePath(); ctx.fill();
+
+        // I
+        ctx.fillRect(76, 87, 12, 32);
+
+        // R
+        ctx.beginPath();
+        ctx.moveTo(123, 87); ctx.lineTo(172, 87);
+        ctx.bezierCurveTo(181, 87, 186, 91, 186, 98);
+        ctx.bezierCurveTo(186, 104, 182, 107, 175, 108);
+        ctx.lineTo(187, 119); ctx.lineTo(171, 119); ctx.lineTo(160, 109);
+        ctx.lineTo(143, 109); ctx.lineTo(143, 119); ctx.lineTo(131, 119);
+        ctx.lineTo(131, 99); ctx.lineTo(170, 99);
+        ctx.bezierCurveTo(173, 99, 174, 98, 174, 97);
+        ctx.bezierCurveTo(174, 96, 173, 95, 170, 95);
+        ctx.lineTo(130, 95); ctx.closePath(); ctx.fill();
+
+        // A (Chevron DIAR)
+        ctx.fillStyle = crimsonColor;
+        ctx.beginPath();
+        ctx.moveTo(105, 74); ctx.lineTo(137, 119); ctx.lineTo(123, 119);
+        ctx.lineTo(105, 93); ctx.lineTo(87, 119); ctx.lineTo(73, 119);
+        ctx.closePath(); ctx.fill();
+
+        ctx.restore();
+      }
+
+      function drawTargetOnCanvas(ctx, cx, cy, radius, strokeColor, lineWidth) {
+        ctx.save();
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = lineWidth;
+        [1, 0.7, 0.4, 0.15].forEach(scale => {
+          ctx.beginPath();
+          ctx.arc(cx, cy, radius * scale, 0, Math.PI * 2);
+          ctx.stroke();
+        });
+        ctx.beginPath();
+        ctx.moveTo(cx - radius * 1.15, cy); ctx.lineTo(cx + radius * 1.15, cy);
+        ctx.moveTo(cx, cy - radius * 1.15); ctx.lineTo(cx, cy + radius * 1.15);
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      function drawRulerOnCanvas(ctx, width, height, strokeColor) {
+        ctx.save();
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = 1;
+        const step = 20;
+        for (let x = 0; x <= width; x += step) {
+          const tickLen = x % 100 === 0 ? 14 : (x % 50 === 0 ? 9 : 5);
+          ctx.beginPath();
+          ctx.moveTo(x, 0); ctx.lineTo(x, tickLen);
+          ctx.moveTo(x, height); ctx.lineTo(x, height - tickLen);
+          ctx.stroke();
+        }
+        for (let y = 0; y <= height; y += step) {
+          const tickLen = y % 100 === 0 ? 14 : (y % 50 === 0 ? 9 : 5);
+          ctx.beginPath();
+          ctx.moveTo(0, y); ctx.lineTo(tickLen, y);
+          ctx.moveTo(width, y); ctx.lineTo(width - tickLen, y);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      function renderAll() {
+        // Verifica integrità DOM header
+        const hdr = document.getElementById('_0xdiar_hdr');
+        if (!hdr || !hdr.textContent.includes('DIAR')) return;
+
+        const width = Math.max(128, Math.min(8192, parseInt(document.getElementById('customWidth').value) || 1920));
+        const height = Math.max(128, Math.min(8192, parseInt(document.getElementById('customHeight').value) || 1080));
+        const cols = parseInt(document.getElementById('colsInput').value);
+        const rows = parseInt(document.getElementById('rowsInput').value);
+        const subGrid = parseInt(document.getElementById('subGrid').value);
+        const baseLineThickness = parseInt(document.getElementById('lineThickness').value);
+        const bgStyle = document.getElementById('bgStyle').value;
+        const logoMode = document.getElementById('logoMode').value;
+        const logoScale = Math.max(0.45, parseInt(document.getElementById('logoScale').value) / 100);
+        const logoOpacity = Math.max(0.5, parseInt(document.getElementById('logoOpacity').value) / 100);
+
+        const optDiagonals = document.getElementById('optDiagonals').checked;
+        const optAxes = document.getElementById('optAxes').checked;
+        const optTargets = document.getElementById('optTargets').checked;
+        const optRuler = document.getElementById('optRuler').checked;
+        const optInfoBox = document.getElementById('optInfoBox').checked;
+
+        const divisor = gcd(width, height);
+        const ratioStr = `${width / divisor}:${height / divisor}`;
+        document.getElementById('badgeInfo').textContent = `${width} × ${height} px | ${ratioStr} | ${cols}×${rows}`;
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const cellW = width / cols;
+        const cellH = height / rows;
+        const minCellDim = Math.min(cellW, cellH);
+
+        const isLightTheme = bgStyle === 'light';
+        const baseBg = isLightTheme ? '#F5F5F5' : '#080808';
+        const primaryLineColor = isLightTheme ? 'rgba(0, 0, 0, 0.7)' : 'rgba(255, 255, 255, 0.65)';
+        const cellBorderColor = isLightTheme ? 'rgba(0, 0, 0, 0.45)' : 'rgba(255, 255, 255, 0.45)';
+
+        ctx.fillStyle = baseBg;
+        ctx.fillRect(0, 0, width, height);
+
+        const activeLogos = getActiveLogoCells(cols, rows);
+        let renderedEmblems = 0;
+
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const x = c * cellW;
+            const y = r * cellH;
+            const label = `${getColumnLabel(c)}${r + 1}`;
+            const cellKey = `${c}-${r}`;
+
+            const hasLogo = activeLogos.has(cellKey);
+            const isEven = (r + c) % 2 === 0;
+            let isCellColored = false;
+
+            if (!hasLogo) {
+              if (bgStyle === 'color' && isEven) {
+                ctx.fillStyle = colorPalette[(r * 3 + c) % colorPalette.length];
+                ctx.fillRect(x, y, cellW, cellH);
+                isCellColored = true;
+              } else if (bgStyle === 'grayscale' && isEven) {
+                ctx.fillStyle = grayPalette[(r + c) % grayPalette.length];
+                ctx.fillRect(x, y, cellW, cellH);
+                isCellColored = true;
+              }
+            }
+
+            if (subGrid > 0) {
+              ctx.save();
+              ctx.strokeStyle = isCellColored ? 'rgba(0,0,0,0.28)' : (isLightTheme ? 'rgba(0,0,0,0.22)' : 'rgba(255,255,255,0.22)');
+              ctx.lineWidth = Math.max(1, baseLineThickness * 0.6);
+              ctx.setLineDash([4, 4]);
+              for (let s = 1; s < subGrid; s++) {
+                const sx = x + (cellW / subGrid) * s;
+                const sy = y + (cellH / subGrid) * s;
+                ctx.beginPath();
+                ctx.moveTo(sx, y); ctx.lineTo(sx, y + cellH);
+                ctx.moveTo(x, sy); ctx.lineTo(x + cellW, sy);
+                ctx.stroke();
+              }
+              ctx.restore();
+            }
+
+            ctx.strokeStyle = cellBorderColor;
+            ctx.lineWidth = baseLineThickness;
+            ctx.strokeRect(x, y, cellW, cellH);
+
+            if (hasLogo) {
+              _renderDiarEmblem(ctx, x + cellW / 2, y + cellH / 2, minCellDim * logoScale, logoMode, logoOpacity);
+              renderedEmblems++;
+              ctx.fillStyle = isLightTheme ? '#000000' : '#FFFFFF';
+              ctx.font = `bold ${Math.max(10, Math.round(minCellDim * 0.14))}px "JetBrains Mono", monospace`;
+              ctx.textAlign = 'left';
+              ctx.textBaseline = 'top';
+              ctx.fillText(label, x + cellW * 0.08, y + cellH * 0.08);
+            } else {
+              ctx.fillStyle = (isLightTheme || isCellColored) ? '#000000' : '#FFFFFF';
+              ctx.font = `bold ${Math.max(11, Math.round(minCellDim * 0.27))}px "JetBrains Mono", monospace`;
+              ctx.textAlign = 'center';
+              ctx.textBaseline = 'middle';
+              ctx.fillText(label, x + cellW / 2, y + cellH / 2);
+            }
+          }
+        }
+
+        // Fallback anti-manomissione: forza il logo DIAR al centro se alterato
+        if (renderedEmblems === 0) {
+          _renderDiarEmblem(ctx, width / 2, height / 2, minCellDim * 0.85, 'stroke', 1);
+        }
+
+        if (optDiagonals || optAxes) {
+          ctx.save();
+          ctx.strokeStyle = primaryLineColor;
+          ctx.lineWidth = baseLineThickness * 1.25;
+          ctx.beginPath();
+          if (optDiagonals) {
+            ctx.moveTo(0, 0); ctx.lineTo(width, height);
+            ctx.moveTo(width, 0); ctx.lineTo(0, height);
+          }
+          if (optAxes) {
+            ctx.moveTo(width / 2, 0); ctx.lineTo(width / 2, height);
+            ctx.moveTo(0, height / 2); ctx.lineTo(width, height / 2);
+          }
+          ctx.stroke();
+          ctx.restore();
+        }
+
+        if (optTargets) {
+          const targetRadius = minCellDim * 0.42;
+          const targetStroke = isLightTheme ? '#000000' : '#FFFFFF';
+          drawTargetOnCanvas(ctx, cellW * 0.5, cellH * 0.5, targetRadius, targetStroke, baseLineThickness);
+          drawTargetOnCanvas(ctx, width - cellW * 0.5, cellH * 0.5, targetRadius, targetStroke, baseLineThickness);
+          drawTargetOnCanvas(ctx, cellW * 0.5, height - cellH * 0.5, targetRadius, targetStroke, baseLineThickness);
+          drawTargetOnCanvas(ctx, width - cellW * 0.5, height - cellH * 0.5, targetRadius, targetStroke, baseLineThickness);
+        }
+
+        if (optRuler) {
+          drawRulerOnCanvas(ctx, width, height, isLightTheme ? 'rgba(0,0,0,0.75)' : 'rgba(255,255,255,0.75)');
+        }
+
+        if (optInfoBox) {
+          ctx.save();
+          const boxH = Math.max(32, height * 0.036);
+          const boxW = Math.min(width * 0.72, Math.max(380, width * 0.34));
+          const boxX = (width - boxW) / 2;
+          const boxY = height - boxH - (optRuler ? 18 : 6);
+
+          ctx.fillStyle = isLightTheme ? 'rgba(255,255,255,0.94)' : 'rgba(10,10,10,0.92)';
+          ctx.strokeStyle = isLightTheme ? '#000000' : '#FFFFFF';
+          ctx.lineWidth = Math.max(1, baseLineThickness);
+          ctx.fillRect(boxX, boxY, boxW, boxH);
+          ctx.strokeRect(boxX, boxY, boxW, boxH);
+
+          // Mini emblema circolare DIAR integrato nella targhetta tecnica
+          const badgeSize = boxH * 0.76;
+          const badgeCx = boxX + boxH * 0.58;
+          const badgeCy = boxY + boxH / 2;
+          _renderDiarEmblem(ctx, badgeCx, badgeCy, badgeSize, isLightTheme ? 'pure' : 'stroke', 1);
+
+          ctx.fillStyle = isLightTheme ? '#000000' : '#FFFFFF';
+          ctx.font = `bold ${Math.round(boxH * 0.42)}px "JetBrains Mono", monospace`;
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(`${_brandTag} | ${width}×${height}px | ${ratioStr} | ${cols}×${rows}`, boxX + badgeSize * 0.55 + (boxW - badgeSize * 0.55) / 2, boxY + boxH / 2);
+          ctx.restore();
+        }
+
+        ctx.save();
+        ctx.strokeStyle = isLightTheme ? '#000000' : '#FFFFFF';
+        ctx.lineWidth = Math.max(1.5, baseLineThickness);
+        ctx.strokeRect(0.5, 0.5, width - 1, height - 1);
+        ctx.restore();
+      }
+
+      function downloadSVG() {
+        const width = Math.max(128, Math.min(8192, parseInt(document.getElementById('customWidth').value) || 1920));
+        const height = Math.max(128, Math.min(8192, parseInt(document.getElementById('customHeight').value) || 1080));
+        const cols = parseInt(document.getElementById('colsInput').value);
+        const rows = parseInt(document.getElementById('rowsInput').value);
+        const subGrid = parseInt(document.getElementById('subGrid').value);
+        const baseLineThickness = parseInt(document.getElementById('lineThickness').value);
+        const bgStyle = document.getElementById('bgStyle').value;
+        const logoMode = document.getElementById('logoMode').value;
+        const logoScale = Math.max(0.45, parseInt(document.getElementById('logoScale').value) / 100);
+        const logoOpacity = Math.max(0.5, parseInt(document.getElementById('logoOpacity').value) / 100);
+
+        const optDiagonals = document.getElementById('optDiagonals').checked;
+        const optAxes = document.getElementById('optAxes').checked;
+        const optTargets = document.getElementById('optTargets').checked;
+        const optRuler = document.getElementById('optRuler').checked;
+        const optInfoBox = document.getElementById('optInfoBox').checked;
+
+        const cellW = width / cols;
+        const cellH = height / rows;
+        const minCellDim = Math.min(cellW, cellH);
+        const isLightTheme = bgStyle === 'light';
+        const baseBg = isLightTheme ? '#F5F5F5' : '#080808';
+        const primaryLineColor = isLightTheme ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.65)';
+        const cellBorderColor = isLightTheme ? 'rgba(0,0,0,0.45)' : 'rgba(255,255,255,0.45)';
+        const divisor = gcd(width, height);
+        const ratioStr = `${width / divisor}:${height / divisor}`;
+        const activeLogos = getActiveLogoCells(cols, rows);
+
+        let svg = [];
+        svg.push(`<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">`);
+        svg.push(`<metadata>Created with ${_brandTag} - Precision Video Mapping Calibration</metadata>`);
+        svg.push(`<rect width="${width}" height="${height}" fill="${baseBg}"/>`);
+
+        for (let r = 0; r < rows; r++) {
+          for (let c = 0; c < cols; c++) {
+            const x = c * cellW;
+            const y = r * cellH;
+            const label = `${getColumnLabel(c)}${r + 1}`;
+            const cellKey = `${c}-${r}`;
+            const hasLogo = activeLogos.has(cellKey);
+            const isEven = (r + c) % 2 === 0;
+            let isCellColored = false;
+
+            if (!hasLogo) {
+              if (bgStyle === 'color' && isEven) {
+                const fill = colorPalette[(r * 3 + c) % colorPalette.length];
+                svg.push(`<rect x="${x}" y="${y}" width="${cellW}" height="${cellH}" fill="${fill}"/>`);
+                isCellColored = true;
+              } else if (bgStyle === 'grayscale' && isEven) {
+                const fill = grayPalette[(r + c) % grayPalette.length];
+                svg.push(`<rect x="${x}" y="${y}" width="${cellW}" height="${cellH}" fill="${fill}"/>`);
+                isCellColored = true;
+              }
+            }
+
+            if (subGrid > 0) {
+              const subColor = isCellColored ? 'rgba(0,0,0,0.28)' : (isLightTheme ? 'rgba(0,0,0,0.22)' : 'rgba(255,255,255,0.22)');
+              for (let s = 1; s < subGrid; s++) {
+                const sx = x + (cellW / subGrid) * s;
+                const sy = y + (cellH / subGrid) * s;
+                svg.push(`<line x1="${sx}" y1="${y}" x2="${sx}" y2="${y + cellH}" stroke="${subColor}" stroke-width="${Math.max(1, baseLineThickness * 0.6)}" stroke-dasharray="4,4"/>`);
+                svg.push(`<line x1="${x}" y1="${sy}" x2="${x + cellW}" y2="${sy}" stroke="${subColor}" stroke-width="${Math.max(1, baseLineThickness * 0.6)}" stroke-dasharray="4,4"/>`);
+              }
+            }
+
+            svg.push(`<rect x="${x}" y="${y}" width="${cellW}" height="${cellH}" fill="none" stroke="${cellBorderColor}" stroke-width="${baseLineThickness}"/>`);
+
+            if (hasLogo) {
+              const cx = x + cellW / 2;
+              const cy = y + cellH / 2;
+              const size = minCellDim * logoScale;
+              const rad = size * 0.5;
+              const sc = size / 200;
+              const circleFill = logoMode === 'white' ? 'rgba(255,255,255,0.14)' : '#050505';
+              const strokeAttr = (logoMode === 'stroke' || logoMode === 'glow' || logoMode === 'white')
+                ? `stroke="${logoMode === 'white' ? '#FFFFFF' : 'rgba(255,255,255,0.88)'}" stroke-width="${Math.max(1.5, size * 0.022)}"`
+                : '';
+              const crimsonFill = logoMode === 'white' ? '#FFFFFF' : '#800808';
+
+              svg.push(`<g opacity="${logoOpacity}">`);
+              svg.push(`<circle cx="${cx}" cy="${cy}" r="${rad}" fill="${circleFill}" ${strokeAttr}/>`);
+              svg.push(`<g transform="translate(${cx}, ${cy}) scale(${sc}) translate(-100, -100)">`);
+              svg.push(`<path d="M 13 87 L 55 87 C 66 87 72 93 72 103 C 72 113 66 119 55 119 L 21 119 L 21 95 L 33 95 L 33 109 L 53 109 C 57 109 60 107 60 103 C 60 99 57 97 53 97 L 20 97 Z" fill="#FFFFFF"/>`);
+              svg.push(`<rect x="76" y="87" width="12" height="32" fill="#FFFFFF"/>`);
+              svg.push(`<path d="M 123 87 L 172 87 C 181 87 186 91 186 98 C 186 104 182 107 175 108 L 187 119 L 171 119 L 160 109 L 143 109 L 143 119 L 131 119 L 131 99 L 170 99 C 173 99 174 98 174 97 C 174 96 173 95 170 95 L 130 95 Z" fill="#FFFFFF"/>`);
+              svg.push(`<polygon points="105,74 137,119 123,119 105,93 87,119 73,119" fill="${crimsonFill}"/>`);
+              svg.push(`</g></g>`);
+
+              const lblFill = isLightTheme ? '#000000' : '#FFFFFF';
+              const fSize = Math.max(10, Math.round(minCellDim * 0.14));
+              svg.push(`<text x="${x + cellW * 0.08}" y="${y + cellH * 0.08 + fSize * 0.85}" fill="${lblFill}" font-family="monospace" font-weight="bold" font-size="${fSize}">${label}</text>`);
+            } else {
+              const textColor = (isLightTheme || isCellColored) ? '#000000' : '#FFFFFF';
+              const fSize = Math.max(11, Math.round(minCellDim * 0.27));
+              svg.push(`<text x="${x + cellW / 2}" y="${y + cellH / 2}" fill="${textColor}" font-family="monospace" font-weight="bold" font-size="${fSize}" text-anchor="middle" dominant-baseline="central">${label}</text>`);
+            }
+          }
+        }
+
+        if (optDiagonals) {
+          svg.push(`<line x1="0" y1="0" x2="${width}" y2="${height}" stroke="${primaryLineColor}" stroke-width="${baseLineThickness * 1.25}"/>`);
+          svg.push(`<line x1="${width}" y1="0" x2="0" y2="${height}" stroke="${primaryLineColor}" stroke-width="${baseLineThickness * 1.25}"/>`);
+        }
+        if (optAxes) {
+          svg.push(`<line x1="${width / 2}" y1="0" x2="${width / 2}" y2="${height}" stroke="${primaryLineColor}" stroke-width="${baseLineThickness * 1.25}"/>`);
+          svg.push(`<line x1="0" y1="${height / 2}" x2="${width}" y2="${height / 2}" stroke="${primaryLineColor}" stroke-width="${baseLineThickness * 1.25}"/>`);
+        }
+
+        if (optTargets) {
+          const r = minCellDim * 0.42;
+          const tCol = isLightTheme ? '#000000' : '#FFFFFF';
+          const centers = [
+            [cellW * 0.5, cellH * 0.5],
+            [width - cellW * 0.5, cellH * 0.5],
+            [cellW * 0.5, height - cellH * 0.5],
+            [width - cellW * 0.5, height - cellH * 0.5]
+          ];
+          centers.forEach(([cx, cy]) => {
+            [1, 0.7, 0.4, 0.15].forEach(s => {
+              svg.push(`<circle cx="${cx}" cy="${cy}" r="${r * s}" fill="none" stroke="${tCol}" stroke-width="${baseLineThickness}"/>`);
+            });
+            svg.push(`<line x1="${cx - r * 1.15}" y1="${cy}" x2="${cx + r * 1.15}" y2="${cy}" stroke="${tCol}" stroke-width="${baseLineThickness}"/>`);
+            svg.push(`<line x1="${cx}" y1="${cy - r * 1.15}" x2="${cx}" y2="${cy + r * 1.15}" stroke="${tCol}" stroke-width="${baseLineThickness}"/>`);
+          });
+        }
+
+        if (optInfoBox) {
+          const boxH = Math.max(32, height * 0.036);
+          const boxW = Math.min(width * 0.72, Math.max(380, width * 0.34));
+          const boxX = (width - boxW) / 2;
+          const boxY = height - boxH - (optRuler ? 18 : 6);
+          const bFill = isLightTheme ? 'rgba(255,255,255,0.94)' : 'rgba(10,10,10,0.92)';
+          const bStroke = isLightTheme ? '#000000' : '#FFFFFF';
+
+          // Mini emblema DIAR vettoriale nella targhetta SVG
+          const badgeSize = boxH * 0.76;
+          const badgeCx = boxX + boxH * 0.58;
+          const badgeCy = boxY + boxH / 2;
+          const bRad = badgeSize * 0.5;
+          const bSc = badgeSize / 200;
+
+          svg.push(`<rect x="${boxX}" y="${boxY}" width="${boxW}" height="${boxH}" fill="${bFill}" stroke="${bStroke}" stroke-width="${Math.max(1, baseLineThickness)}"/>`);
+          svg.push(`<circle cx="${badgeCx}" cy="${badgeCy}" r="${bRad}" fill="#050505" stroke="${bStroke}" stroke-width="${Math.max(1, badgeSize * 0.03)}"/>`);
+          svg.push(`<g transform="translate(${badgeCx}, ${badgeCy}) scale(${bSc}) translate(-100, -100)">`);
+          svg.push(`<path d="M 13 87 L 55 87 C 66 87 72 93 72 103 C 72 113 66 119 55 119 L 21 119 L 21 95 L 33 95 L 33 109 L 53 109 C 57 109 60 107 60 103 C 60 99 57 97 53 97 L 20 97 Z" fill="#FFFFFF"/>`);
+          svg.push(`<rect x="76" y="87" width="12" height="32" fill="#FFFFFF"/>`);
+          svg.push(`<path d="M 123 87 L 172 87 C 181 87 186 91 186 98 C 186 104 182 107 175 108 L 187 119 L 171 119 L 160 109 L 143 109 L 143 119 L 131 119 L 131 99 L 170 99 C 173 99 174 98 174 97 C 174 96 173 95 170 95 L 130 95 Z" fill="#FFFFFF"/>`);
+          svg.push(`<polygon points="105,74 137,119 123,119 105,93 87,119 73,119" fill="#800808"/>`);
+          svg.push(`</g>`);
+          svg.push(`<text x="${boxX + badgeSize * 0.55 + (boxW - badgeSize * 0.55) / 2}" y="${boxY + boxH / 2}" fill="${bStroke}" font-family="monospace" font-weight="bold" font-size="${Math.round(boxH * 0.42)}" text-anchor="middle" dominant-baseline="central">${_brandTag} | ${width}×${height}px | ${ratioStr} | ${cols}×${rows}</text>`);
+        }
+
+        svg.push(`<rect x="0.5" y="0.5" width="${width - 1}" height="${height - 1}" fill="none" stroke="${isLightTheme ? '#000000' : '#FFFFFF'}" stroke-width="${Math.max(1.5, baseLineThickness)}"/>`);
+        svg.push(`</svg>`);
+
+        const blob = new Blob([svg.join('\n')], { type: 'image/svg+xml;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.download = `DIAR_mapping_grid_${cols}x${rows}_${width}x${height}.svg`;
+        link.href = url;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        showExportToast();
+      }
+
+      function downloadPNG() {
+        const width = canvas.width;
+        const height = canvas.height;
+        const cols = document.getElementById('colsInput').value;
+        const rows = document.getElementById('rowsInput').value;
+        const link = document.createElement('a');
+        link.download = `DIAR_mapping_grid_${cols}x${rows}_${width}x${height}.png`;
+        link.href = canvas.toDataURL('image/png');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showExportToast();
+      }
+
+      function showExportToast() {
+        const msg = document.getElementById('statusMsg');
+        msg.classList.remove('hidden');
+        setTimeout(() => msg.classList.add('hidden'), 2200);
+      }
+
+      // Event Listeners
+      document.getElementById('langItBtn').addEventListener('click', () => _applyLanguage('it'));
+      document.getElementById('langEnBtn').addEventListener('click', () => _applyLanguage('en'));
+      document.getElementById('aspectPreset').addEventListener('change', updateFormatUI);
+
+      document.getElementById('resolutionPreset').addEventListener('change', (e) => {
+        const [w, h] = e.target.value.split('x').map(Number);
+        document.getElementById('customWidth').value = w;
+        document.getElementById('customHeight').value = h;
+        renderAll();
+      });
+
+      ['customWidth', 'customHeight'].forEach(id => {
+        document.getElementById(id).addEventListener('input', () => {
+          document.getElementById('aspectPreset').value = 'custom';
+          document.getElementById('resolutionPresetWrap').classList.add('hidden');
+          renderAll();
+        });
+      });
+
+      document.getElementById('colsInput').addEventListener('input', (e) => {
+        document.getElementById('colsVal').textContent = e.target.value;
+        document.getElementById('autoGridToggle').checked = false;
+        renderAll();
+      });
+
+      document.getElementById('rowsInput').addEventListener('input', (e) => {
+        document.getElementById('rowsVal').textContent = e.target.value;
+        document.getElementById('autoGridToggle').checked = false;
+        renderAll();
+      });
+
+      document.getElementById('logoScale').addEventListener('input', (e) => {
+        document.getElementById('logoScaleVal').textContent = `${e.target.value}%`;
+        renderAll();
+      });
+
+      document.getElementById('logoOpacity').addEventListener('input', (e) => {
+        document.getElementById('logoOpacityVal').textContent = `${e.target.value}%`;
+        renderAll();
+      });
+
+      document.getElementById('logoPlacement').addEventListener('change', () => {
+        customToggledCells.clear();
+        updateResetButtonVisibility();
+        renderAll();
+      });
+
+      document.getElementById('resetCustomLogoCells').addEventListener('click', () => {
+        customToggledCells.clear();
+        updateResetButtonVisibility();
+        renderAll();
+      });
+
+      canvas.addEventListener('mousemove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        const px = Math.floor((e.clientX - rect.left) * scaleX);
+        const py = Math.floor((e.clientY - rect.top) * scaleY);
+
+        const cols = parseInt(document.getElementById('colsInput').value);
+        const rows = parseInt(document.getElementById('rowsInput').value);
+        const c = Math.min(cols - 1, Math.max(0, Math.floor(px / (canvas.width / cols))));
+        const r = Math.min(rows - 1, Math.max(0, Math.floor(py / (canvas.height / rows))));
+
+        const cellName = `${getColumnLabel(c)}${r + 1}`;
+        const cw = _i18n[_currentLang].cellWord;
+        document.getElementById('hoverCellInfo').textContent = `${cw}: ${cellName} | Pixel: ${px}, ${py}`;
+      });
+
+      canvas.addEventListener('click', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        const px = (e.clientX - rect.left) * scaleX;
+        const py = (e.clientY - rect.top) * scaleY;
+
+        const cols = parseInt(document.getElementById('colsInput').value);
+        const rows = parseInt(document.getElementById('rowsInput').value);
+        const c = Math.min(cols - 1, Math.max(0, Math.floor(px / (canvas.width / cols))));
+        const r = Math.min(rows - 1, Math.max(0, Math.floor(py / (canvas.height / rows))));
+        const key = `${c}-${r}`;
+
+        if (customToggledCells.has(key)) customToggledCells.delete(key);
+        else customToggledCells.add(key);
+
+        updateResetButtonVisibility();
+        renderAll();
+      });
+
+      ['subGrid', 'lineThickness', 'logoMode', 'bgStyle', 'optDiagonals', 'optAxes', 'optTargets', 'optRuler', 'optInfoBox'].forEach(id => {
+        document.getElementById(id).addEventListener('change', renderAll);
+      });
+
+      document.getElementById('downloadPngBtn').addEventListener('click', downloadPNG);
+      document.getElementById('downloadSvgBtn').addEventListener('click', downloadSVG);
+
+      // Genera PNG ad alta definizione dell'emblema DIAR per PWA Manifest & Icona .ICO
+      function _buildDiarIconDataUrl(pxSize) {
+        const off = document.createElement('canvas');
+        off.width = pxSize;
+        off.height = pxSize;
+        const octx = off.getContext('2d');
+        _renderDiarEmblem(octx, pxSize / 2, pxSize / 2, pxSize * 0.96, 'stroke', 1);
+        return off.toDataURL('image/png');
+      }
+
+      // Esportazione file .ICO nativo (256x256 PNG incapsulato in header ICO standard Windows)
+      function _buildIcoBytes() {
+        const pngDataUrl = _buildDiarIconDataUrl(256);
+        const base64 = pngDataUrl.split(',')[1];
+        const binStr = atob(base64);
+        const pngBytes = new Uint8Array(binStr.length);
+        for (let i = 0; i < binStr.length; i++) pngBytes[i] = binStr.charCodeAt(i);
+
+        const header = new Uint8Array(22);
+        const view = new DataView(header.buffer);
+        view.setUint16(0, 0, true);
+        view.setUint16(2, 1, true);
+        view.setUint16(4, 1, true);
+        header[6] = 0;
+        header[7] = 0;
+        header[8] = 0;
+        header[9] = 0;
+        view.setUint16(10, 1, true);
+        view.setUint16(12, 32, true);
+        view.setUint32(14, pngBytes.length, true);
+        view.setUint32(18, 22, true);
+
+        const full = new Uint8Array(22 + pngBytes.length);
+        full.set(header, 0);
+        full.set(pngBytes, 22);
+        return full;
+      }
+
+      function downloadICO() {
+        const icoBytes = _buildIcoBytes();
+        const icoBlob = new Blob([icoBytes], { type: 'image/x-icon' });
+        const url = URL.createObjectURL(icoBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'DIAR_Mapping_Studio.ico';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showExportToast();
+      }
+
+      // Costruttore ZIP nativo senza dipendenze esterne (STORE mode + CRC32 + permessi eseguibili Unix/macOS)
+      function _createZipBlob(entries) {
+        const crcTable = new Uint32Array(256);
+        for (let n = 0; n < 256; n++) {
+          let c = n;
+          for (let k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+          crcTable[n] = c;
+        }
+        function crc32(buf) {
+          let crc = 0xFFFFFFFF;
+          for (let i = 0; i < buf.length; i++) crc = crcTable[(crc ^ buf[i]) & 0xFF] ^ (crc >>> 8);
+          return (crc ^ 0xFFFFFFFF) >>> 0;
+        }
+
+        const encoder = new TextEncoder();
+        const localParts = [];
+        const centralParts = [];
+        let offset = 0;
+
+        entries.forEach(entry => {
+          const nameBytes = encoder.encode(entry.name);
+          const dataBytes = typeof entry.data === 'string' ? encoder.encode(entry.data) : entry.data;
+          const crc = crc32(dataBytes);
+          const isExec = !!entry.executable;
+
+          // Local File Header (30 bytes + name)
+          const lfh = new Uint8Array(30 + nameBytes.length);
+          const lv = new DataView(lfh.buffer);
+          lv.setUint32(0, 0x04034b50, true);
+          lv.setUint16(4, 20, true);
+          lv.setUint16(6, 0x0800, true); // UTF-8 flag
+          lv.setUint16(8, 0, true);      // STORE (no compression)
+          lv.setUint16(10, 0, true);
+          lv.setUint16(12, 0, true);
+          lv.setUint32(14, crc, true);
+          lv.setUint32(18, dataBytes.length, true);
+          lv.setUint32(22, dataBytes.length, true);
+          lv.setUint16(26, nameBytes.length, true);
+          lv.setUint16(28, 0, true);
+          lfh.set(nameBytes, 30);
+
+          localParts.push(lfh, dataBytes);
+
+          // Central Directory Header (46 bytes + name)
+          const cdh = new Uint8Array(46 + nameBytes.length);
+          const cv = new DataView(cdh.buffer);
+          cv.setUint32(0, 0x02014b50, true);
+          cv.setUint16(4, 0x0314, true); // Unix attributes compatibility
+          cv.setUint16(6, 20, true);
+          cv.setUint16(8, 0x0800, true);
+          cv.setUint16(10, 0, true);
+          cv.setUint16(12, 0, true);
+          cv.setUint16(14, 0, true);
+          cv.setUint32(16, crc, true);
+          cv.setUint32(20, dataBytes.length, true);
+          cv.setUint32(24, dataBytes.length, true);
+          cv.setUint16(28, nameBytes.length, true);
+          cv.setUint16(30, 0, true);
+          cv.setUint16(32, 0, true);
+          cv.setUint16(34, 0, true);
+          cv.setUint16(36, 0, true);
+          // Permessi Unix: 0755 per script .command/.sh macOS, 0644 per altri file
+          cv.setUint32(38, isExec ? (0o100755 << 16) : (0o100644 << 16), true);
+          cv.setUint32(42, offset, true);
+          cdh.set(nameBytes, 46);
+
+          centralParts.push(cdh);
+          offset += lfh.length + dataBytes.length;
+        });
+
+        const cdSize = centralParts.reduce((acc, p) => acc + p.length, 0);
+        const eocd = new Uint8Array(22);
+        const ev = new DataView(eocd.buffer);
+        ev.setUint32(0, 0x06054b50, true);
+        ev.setUint16(4, 0, true);
+        ev.setUint16(6, 0, true);
+        ev.setUint16(8, entries.length, true);
+        ev.setUint16(10, entries.length, true);
+        ev.setUint32(12, cdSize, true);
+        ev.setUint32(16, offset, true);
+        ev.setUint16(20, 0, true);
+
+        return new Blob([...localParts, ...centralParts, eocd], { type: 'application/zip' });
+      }
+
+      function _getCurrentHtmlSource() {
+        const clone = document.documentElement.cloneNode(true);
+        clone.setAttribute('data-desktop-standalone', '1');
+        const distBox = clone.querySelector('#desktopDistributionBox');
+        if (distBox) distBox.remove();
+        return '<!DOCTYPE html>\n' + clone.outerHTML;
+      }
+
+      // Genera Pacchetto Windows (.zip) con Launcher automatico, Icona DIAR.ico e guida
+      function downloadWindowsPackage() {
+        const htmlSource = _getCurrentHtmlSource();
+        const icoBytes = _buildIcoBytes();
+
+        // Launcher batch con auto-creazione collegamento Desktop dotato di icona DIAR
+        const batScript = [
+          '@echo off',
+          'title DIAR Mapping Card Studio',
+          'set "APP_DIR=%~dp0app"',
+          'set "HTML_FILE=%APP_DIR%\\index.html"',
+          'set "ICO_FILE=%APP_DIR%\\DIAR_Mapping_Studio.ico"',
+          'set "LNK_FILE=%~dp0DIAR Mapping Card Studio.lnk"',
+          'if not exist "%LNK_FILE%" (',
+          '  powershell -NoProfile -ExecutionPolicy Bypass -Command "$ws = New-Object -ComObject WScript.Shell; $s = $ws.CreateShortcut(\'%LNK_FILE%\'); $s.TargetPath = \'%HTML_FILE%\'; $s.IconLocation = \'%ICO_FILE%,0\'; $s.WorkingDirectory = \'%APP_DIR%\'; $s.Save()" >nul 2>&1',
+          ')',
+          'start "" "%HTML_FILE%"',
+          'exit'
+        ].join('\r\n');
+
+        const readmeWin = [
+          '====================================================',
+          '  DIAR - MAPPING CARD STUDIO (WINDOWS EDITION)',
+          '====================================================',
+          '',
+          '1. Estrai tutta la cartella dallo ZIP.',
+          '2. Fai doppio clic su "Avvia_DIAR_Mapping_Studio.bat".',
+          '   Al primo avvio verra creato automaticamente il',
+          '   collegamento con l\'icona circolare DIAR.',
+          '',
+          'Concept & Engine by DIAR - Free Precision Edition'
+        ].join('\r\n');
+
+        const zipBlob = _createZipBlob([
+          { name: 'DIAR_Mapping_Card_Studio_Windows/Avvia_DIAR_Mapping_Studio.bat', data: batScript },
+          { name: 'DIAR_Mapping_Card_Studio_Windows/LEGGIMI_README.txt', data: readmeWin },
+          { name: 'DIAR_Mapping_Card_Studio_Windows/app/index.html', data: htmlSource },
+          { name: 'DIAR_Mapping_Card_Studio_Windows/app/DIAR_Mapping_Studio.ico', data: icoBytes }
+        ]);
+
+        const url = URL.createObjectURL(zipBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'DIAR_Mapping_Card_Studio_Windows.zip';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showExportToast();
+      }
+
+      // Genera Pacchetto macOS (.zip) con Launcher .command eseguibile, App Icon PNG/SVG e guida
+      function downloadMacPackage() {
+        const htmlSource = _getCurrentHtmlSource();
+        const pngDataUrl = _buildDiarIconDataUrl(512);
+        const base64 = pngDataUrl.split(',')[1];
+        const binStr = atob(base64);
+        const pngBytes = new Uint8Array(binStr.length);
+        for (let i = 0; i < binStr.length; i++) pngBytes[i] = binStr.charCodeAt(i);
+
+        const commandScript = [
+          '#!/bin/bash',
+          'DIR="$(cd "$(dirname "$0")" && pwd)"',
+          'open "$DIR/app/index.html"',
+          ''
+        ].join('\n');
+
+        const readmeMac = [
+          '====================================================',
+          '  DIAR - MAPPING CARD STUDIO (macOS EDITION)',
+          '====================================================',
+          '',
+          '1. Decomprimi il file ZIP sul tuo Mac.',
+          '2. Fai doppio clic su "Avvia_DIAR_Mapping_Studio.command"',
+          '   (oppure apri app/index.html in Safari / Chrome).',
+          '3. Per personalizzare l\'icona su macOS: copia',
+          '   "DIAR_Icon_512.png" in Anteprima (Cmd+C), poi',
+          '   seleziona la cartella -> Ottieni informazioni (Cmd+I)',
+          '   -> clicca sull\'icona in alto e incolla (Cmd+V).',
+          '',
+          'Concept & Engine by DIAR - Free Precision Edition'
+        ].join('\n');
+
+        const zipBlob = _createZipBlob([
+          { name: 'DIAR_Mapping_Card_Studio_macOS/Avvia_DIAR_Mapping_Studio.command', data: commandScript, executable: true },
+          { name: 'DIAR_Mapping_Card_Studio_macOS/LEGGIMI_README.txt', data: readmeMac },
+          { name: 'DIAR_Mapping_Card_Studio_macOS/DIAR_Icon_512.png', data: pngBytes },
+          { name: 'DIAR_Mapping_Card_Studio_macOS/app/index.html', data: htmlSource }
+        ]);
+
+        const url = URL.createObjectURL(zipBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'DIAR_Mapping_Card_Studio_macOS.zip';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showExportToast();
+      }
+
+      // Genera Pacchetto Completo All-in-One (GitHub Pages + Windows + macOS + Icone + Licenza)
+      function downloadAllInOneRelease() {
+        const htmlSource = _getCurrentHtmlSource();
+        const icoBytes = _buildIcoBytes();
+        const pngDataUrl = _buildDiarIconDataUrl(512);
+        const base64 = pngDataUrl.split(',')[1];
+        const binStr = atob(base64);
+        const pngBytes = new Uint8Array(binStr.length);
+        for (let i = 0; i < binStr.length; i++) pngBytes[i] = binStr.charCodeAt(i);
+
+        const batScript = [
+          '@echo off',
+          'title DIAR Mapping Card Studio',
+          'set "APP_DIR=%~dp0"',
+          'set "HTML_FILE=%APP_DIR%index.html"',
+          'set "ICO_FILE=%APP_DIR%assets\\DIAR_Mapping_Studio.ico"',
+          'set "LNK_FILE=%APP_DIR%DIAR Mapping Card Studio.lnk"',
+          'if not exist "%LNK_FILE%" (',
+          '  powershell -NoProfile -ExecutionPolicy Bypass -Command "$ws = New-Object -ComObject WScript.Shell; $s = $ws.CreateShortcut(\'%LNK_FILE%\'); $s.TargetPath = \'%HTML_FILE%\'; $s.IconLocation = \'%ICO_FILE%,0\'; $s.WorkingDirectory = \'%APP_DIR%\'; $s.Save()" >nul 2>&1',
+          ')',
+          'start "" "%HTML_FILE%"',
+          'exit'
+        ].join('\r\n');
+
+        const commandScript = [
+          '#!/bin/bash',
+          'DIR="$(cd "$(dirname "$0")" && pwd)"',
+          'open "$DIR/index.html"',
+          ''
+        ].join('\n');
+
+        const readmeMd = [
+          '# DIAR — Mapping Card Studio (v2.0 Precision Edition)',
+          '',
+          'Generatore professionale **pixel-perfect** di griglie alfanumeriche e test card vettoriali per **Video Mapping**, **Ledwall** e **Proiezione Architetturale**.',
+          '',
+          '![DIAR Logo](assets/DIAR_Icon_512.png)',
+          '',
+          '## Caratteristiche Principali / Key Features',
+          '- **Risoluzioni & Formati Multipli:** 16:9 Orizzontale, 16:9 Verticale (Portrait), 1:1 Quadrato, 4:3, 16:10 WUXGA e dimensioni custom fino a 8K.',
+          '- **Precisione Matematica:** Coordinate alfanumeriche univoche (`A1..AF32`), sottogriglie `2x2` / `4x4`, diagonali, assi mediani, mirini circolari e righello graduato in pixel.',
+          '- **Doppia Esportazione:** Download istantaneo in **PNG** ad altissima risoluzione e **SVG** vettoriale puro.',
+          '- **Bilingue (IT / EN):** Rilevamento automatico della lingua del browser con switch manuale.',
+          '- **Installabile come App (PWA) & Offline Desktop:** Funziona senza connessione su Windows, macOS e dispositivi mobili.',
+          '',
+          '## Avvio Rapido / Quick Start',
+          '- **Web / GitHub Pages:** Apri direttamente `index.html` nel browser.',
+          '- **Windows:** Doppio clic su `Avvia_Windows.bat` (crea automaticamente il collegamento con icona DIAR).',
+          '- **macOS:** Doppio clic su `Avvia_macOS.command`.',
+          '',
+          '## Credits & License',
+          'Original Concept, Vector Emblem & Engine by **DIAR S.r.l.** (Rome, Italy) — Free Precision Edition.'
+        ].join('\n');
+
+        const licenseTxt = [
+          'License: Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)',
+          'https://creativecommons.org/licenses/by-nd/4.0/',
+          '',
+          'DIAR — Mapping Card Studio',
+          'Copyright (c) 2026 DIAR S.r.l. — Rome, Italy. All Rights Reserved.',
+          'VAT / Tax Code (P.IVA / C.F.): 18748551001 | REA: RM - 1803784',
+          '',
+          'LICENSE TERMS:',
+          'This software is provided free of charge for both personal and commercial/professional',
+          'AV, Ledwall, and Projection Mapping use.',
+          'Redistribution is permitted provided that the DIAR S.r.l. brand identity, circular emblem,',
+          'and legal attribution remain intact; no modified/derivative versions removing DIAR branding',
+          'may be distributed.',
+          '',
+          'DISCLAIMER:',
+          'THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.'
+        ].join('\n');
+
+        const zipBlob = _createZipBlob([
+          { name: 'DIAR-Mapping-Card-Studio/index.html', data: htmlSource },
+          { name: 'DIAR-Mapping-Card-Studio/README.md', data: readmeMd },
+          { name: 'DIAR-Mapping-Card-Studio/LICENSE.txt', data: licenseTxt },
+          { name: 'DIAR-Mapping-Card-Studio/Avvia_Windows.bat', data: batScript },
+          { name: 'DIAR-Mapping-Card-Studio/Avvia_macOS.command', data: commandScript, executable: true },
+          { name: 'DIAR-Mapping-Card-Studio/assets/DIAR_Mapping_Studio.ico', data: icoBytes },
+          { name: 'DIAR-Mapping-Card-Studio/assets/DIAR_Icon_512.png', data: pngBytes }
+        ]);
+
+        const url = URL.createObjectURL(zipBlob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'DIAR-Mapping-Card-Studio-v2.0-FullRelease.zip';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        showExportToast();
+      }
+
+      document.getElementById('downloadAllInOneZipBtn').addEventListener('click', downloadAllInOneRelease);
+      document.getElementById('downloadIcoBtn').addEventListener('click', downloadICO);
+      document.getElementById('downloadWinPkgBtn').addEventListener('click', downloadWindowsPackage);
+      document.getElementById('downloadMacPkgBtn').addEventListener('click', downloadMacPackage);
+
+      // Mostra il builder della release completa solo se richiesto via URL (?release=1)
+      if (new URLSearchParams(window.location.search).get('release') === '1') {
+        document.getElementById('downloadAllInOneZipBtn').classList.remove('hidden');
+      }
+
+      // Nasconde i pulsanti di download pacchetti se l'app è già in esecuzione offline/locale o come PWA installata
+      const _isOfflineOrInstalled =
+        document.documentElement.getAttribute('data-desktop-standalone') === '1' ||
+        window.location.protocol === 'file:' ||
+        window.matchMedia('(display-mode: standalone)').matches ||
+        window.navigator.standalone === true;
+
+      if (_isOfflineOrInstalled && new URLSearchParams(window.location.search).get('release') !== '1') {
+        const distBox = document.getElementById('desktopDistributionBox');
+        if (distBox) distBox.classList.add('hidden');
+      }
+
+      // Inizializzazione PWA Manifest e icona Apple Touch
+      function _initPWA() {
+        try {
+          const icon192 = _buildDiarIconDataUrl(192);
+          const icon512 = _buildDiarIconDataUrl(512);
+          const appleLink = document.getElementById('diarAppleIcon');
+          if (appleLink) appleLink.href = icon192;
+
+          const manifestObj = {
+            name: 'DIAR — Mapping Card Studio',
+            short_name: 'DIAR Mapping',
+            description: 'Pixel-perfect video mapping calibration grid & vector test card studio',
+            start_url: '.',
+            display: 'standalone',
+            background_color: '#050505',
+            theme_color: '#050505',
+            icons: [
+              { src: icon192, sizes: '192x192', type: 'image/png' },
+              { src: icon512, sizes: '512x512', type: 'image/png' }
+            ]
+          };
+          const manifestBlob = new Blob([JSON.stringify(manifestObj)], { type: 'application/manifest+json' });
+          const manifestLink = document.getElementById('diarManifest');
+          if (manifestLink) manifestLink.href = URL.createObjectURL(manifestBlob);
+        } catch (e) {}
+
+        let deferredPrompt = null;
+        const installBtn = document.getElementById('installAppBtn');
+        window.addEventListener('beforeinstallprompt', (e) => {
+          e.preventDefault();
+          deferredPrompt = e;
+          if (installBtn) installBtn.classList.remove('hidden');
+        });
+        if (installBtn) {
+          installBtn.addEventListener('click', async () => {
+            if (!deferredPrompt) return;
+            deferredPrompt.prompt();
+            await deferredPrompt.userChoice;
+            deferredPrompt = null;
+            installBtn.classList.add('hidden');
+          });
+        }
+      }
+
+      // Avvio applicazione
+      _applyLanguage(_currentLang);
+      _initPWA();
+      updateFormatUI();
+    })({}, {});
+  </script>
+</body>
+</html>
