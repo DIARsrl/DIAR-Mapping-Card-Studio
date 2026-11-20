@@ -31,6 +31,9 @@ DIAR Mapping Card Studio generates mathematically accurate calibration patterns 
 4. Export the calibration card as SVG or PNG, or download the offline desktop package for show-site use without internet access.
 
 ## License and Attribution
+License: Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)
+
+https://creativecommons.org/licenses/by-nd/4.0/
 
 Copyright (c) 2026 DIAR S.r.l. — Rome, Italy. All Rights Reserved.
 VAT / Tax Code (P.IVA / C.F.): 18748551001 — REA: RM - 1803784
