@@ -1,11 +1,24 @@
 License: Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)
 https://creativecommons.org/licenses/by-nd/4.0/
 
-Copyright (c) 2026 DIAR S.r.l. — Rome, Italy. All Rights Reserved.
+DIAR — Mapping Card Studio
+Copyright (c) 2026 DIAR S.r.l. — Rome, Italy.
 VAT / Tax Code (P.IVA / C.F.): 18748551001 | REA: RM - 1803784
 
-Free for personal and commercial AV / projection mapping use.
-The DIAR S.r.l. brand identity, circular emblem, and attribution must remain intact;
-no derivative or modified versions removing the DIAR logo may be distributed.
+SOFTWARE
+Free of charge for personal and commercial AV, LED wall and projection mapping use.
+Redistribution is permitted provided that the DIAR S.r.l. brand identity, circular emblem
+and attribution remain intact; no derivative or modified versions may be distributed.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
+GENERATED IMAGES (calibration cards exported as PNG or SVG)
+- Free to use, including in commercial projects and live shows.
+- The DIAR emblem placed on the card by the tool must not be removed, covered or altered
+  after export. Choosing its placement, size, finish and opacity inside the tool is allowed.
+- Crediting DIAR S.r.l. (for example "Calibration card by DIAR") is appreciated but not required.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
+
+---
+In breve (IT): software e immagini generate sono gratuiti, anche per uso commerciale.
+Il logo DIAR che lo strumento inserisce nelle card non va tolto, coperto o modificato
+dopo l'esportazione. Citare DIAR S.r.l. è gradito ma non obbligatorio.
