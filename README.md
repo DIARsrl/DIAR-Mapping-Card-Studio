@@ -9,7 +9,7 @@ Live Web Application: https://diarsrl.github.io/DIAR-Mapping-Card-Studio/
 
 | Example 01 | Example 02 |
 | :---: | :---: |
-| ![Preview 01](preview_01.png) | ![Example 02](example_02.png) |
+| ![Preview 02](preview_02.png) | ![Example 02](example_02.png) |
 ## Overview
 
 DIAR Mapping Card Studio generates mathematically accurate calibration patterns directly in the browser. It is designed for AV technicians, media server operators, and visual artists working with Resolume Arena, MadMapper, TouchDesigner, Disguise, or Millumin.
