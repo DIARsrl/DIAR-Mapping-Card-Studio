@@ -2,7 +2,7 @@
 
 Pixel-perfect alphanumeric calibration grid and vector test card generator for projection mapping, LED walls, and live event production.
 
-Live Web Application: https://arcierovfx.github.io/DIAR-Mapping-Card-Studio/
+Live Web Application: https://diarsrl.github.io/DIAR-Mapping-Card-Studio/
 
 ## Overview
 
