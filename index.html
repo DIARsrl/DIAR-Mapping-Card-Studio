@@ -1611,14 +1611,14 @@
         showExportToast();
       }
 
-      document.getElementById('downloadAllInOneZipBtn').addEventListener('click', downloadAllInOneRelease);
-      document.getElementById('downloadIcoBtn').addEventListener('click', downloadICO);
-      document.getElementById('downloadWinPkgBtn').addEventListener('click', downloadWindowsPackage);
-      document.getElementById('downloadMacPkgBtn').addEventListener('click', downloadMacPackage);
+      document.getElementById('downloadAllInOneZipBtn')?.addEventListener('click', downloadAllInOneRelease);
+      document.getElementById('downloadIcoBtn')?.addEventListener('click', downloadICO);
+      document.getElementById('downloadWinPkgBtn')?.addEventListener('click', downloadWindowsPackage);
+      document.getElementById('downloadMacPkgBtn')?.addEventListener('click', downloadMacPackage);
 
       // Mostra il builder della release completa solo se richiesto via URL (?release=1)
       if (new URLSearchParams(window.location.search).get('release') === '1') {
-        document.getElementById('downloadAllInOneZipBtn').classList.remove('hidden');
+        document.getElementById('downloadAllInOneZipBtn')?.classList.remove('hidden');
       }
 
       // Nasconde i pulsanti di download pacchetti se l'app è già in esecuzione offline/locale o come PWA installata
