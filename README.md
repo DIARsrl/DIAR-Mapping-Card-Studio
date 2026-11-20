@@ -39,9 +39,11 @@ License: Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 
 
 https://creativecommons.org/licenses/by-nd/4.0/
 
-Copyright (c) 2026 DIAR S.r.l. — Rome, Italy. All Rights Reserved.
+Copyright (c) 2026 DIAR S.r.l. — Rome, Italy.
 VAT / Tax Code (P.IVA / C.F.): 18748551001 — REA: RM - 1803784
 
 This software is provided free of charge for personal and commercial AV and projection mapping use. Redistribution is permitted provided that the DIAR S.r.l. brand identity, circular emblem, and legal attribution remain intact.
+
+Generated images (PNG / SVG calibration cards) are free to use, including in commercial projects and live shows. The DIAR emblem placed on the card by the tool must not be removed, covered or altered after export; choosing its placement, size, finish and opacity inside the tool is allowed. Crediting DIAR S.r.l. is appreciated but not required.
 
 The software is provided "as is", without warranty of any kind, express or implied.
