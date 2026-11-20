@@ -19,6 +19,7 @@ DIAR Mapping Card Studio generates mathematically accurate calibration patterns 
 ## Specifications
 
 - Formats and Resolutions: Presets for 16:9 horizontal, 16:9 vertical (portrait), 1:1 square, 4:3, 16:10 WUXGA, and custom pixel dimensions up to 8192x8192 px.
+- Operating Modes: Surface (classic calibration grid) and LED wall. LED wall mode builds the card from the physical wall: panel presets (pixel pitch, mm, px per cabinet) or custom size, number of cabinets horizontally and vertically, automatic total resolution and physical size in metres, one labelled cell per cabinet with marked cabinet borders (in PNG and SVG) and an optional internal pixel grid. A multi-projector mode is planned for a future release.
 - Grid System: Unambiguous alphanumeric cell coordinates (A1 through AF32), optional 2x2 and 4x4 dashed sub-grids, optical diagonals, center axes, concentric corner targets, and a 1px perimeter pixel ruler.
 - Interactive Markers: Click any cell on the preview canvas to add or remove extra DIAR alignment markers while keeping the center reference locked.
 - Export Formats: Direct client-side export in high-resolution PNG and scalable pure vector SVG.

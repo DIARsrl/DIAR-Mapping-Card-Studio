@@ -39,6 +39,14 @@
     input[type="range"] {
       accent-color: #b91c1c;
     }
+    /* PROPOSTA B: schede pannello */
+    .led-card[aria-pressed="true"] { border-color: #dc2626; background: rgba(69,10,10,0.55); }
+    .led-card[aria-pressed="true"] .led-pitch { color: #fff; }
+    .mode-btn[aria-pressed="true"] { background: #991b1b; color: #fff; font-weight: 700; }
+    .mode-btn:disabled { cursor: not-allowed; }
+    input.led-num::-webkit-inner-spin-button, input.led-num::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    input.led-num { -moz-appearance: textfield; }
+    input.led-num.led-bad { border-color: #f59e0b; color: #fcd34d; }
   </style>
 </head>
 <body class="bg-neutral-950 text-neutral-100 min-h-screen flex flex-col lg:h-screen lg:overflow-hidden selection:bg-red-900 selection:text-white">
@@ -101,6 +109,123 @@
 
     <!-- Pannello Controlli Laterale -->
     <aside class="w-full lg:w-96 bg-neutral-900/70 border-b lg:border-b-0 lg:border-r border-neutral-800 p-4 overflow-y-auto shrink-0 space-y-5">
+
+      <!-- PROPOSTA B: Modalita' -->
+      <div class="space-y-2 pb-4 border-b border-neutral-800/80">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-neutral-400 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-neutral-400"></span>
+          <span data-i18n="secMode">Modalità</span>
+        </h2>
+        <div role="group" class="grid grid-cols-3 bg-neutral-950 border border-neutral-800 rounded-lg p-0.5 text-xs gap-0.5">
+          <button type="button" id="modeSurfaceBtn" class="mode-btn min-h-[34px] rounded-md text-neutral-300 hover:text-white cursor-pointer" aria-pressed="true" data-i18n="modeSurface">Superficie</button>
+          <button type="button" id="modeLedBtn" class="mode-btn min-h-[34px] rounded-md text-neutral-300 hover:text-white cursor-pointer" aria-pressed="false" data-i18n="modeLed">LED wall</button>
+          <button type="button" id="modeMultiBtn" disabled class="mode-btn min-h-[34px] rounded-md text-neutral-600 leading-tight" aria-pressed="false" title="In arrivo">
+            <span data-i18n="modeMulti">Multi-proiettore</span><br><span data-i18n="soon" class="text-[9px] font-mono-tech uppercase">in arrivo</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- PROPOSTA B: 1. Pannello LED -->
+      <div id="ledPanelSec" class="hidden space-y-3 pb-4 border-b border-neutral-800/80">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-neutral-400 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-red-600"></span>
+          <span data-i18n="secLed1">1. Pannello (cabinet)</span>
+        </h2>
+        <div id="ledCards" class="grid grid-cols-2 gap-1.5"></div>
+        <div id="ledCustomWrap" class="hidden grid grid-cols-2 gap-2 bg-neutral-950/70 border border-neutral-800 rounded-lg p-2">
+          <div>
+            <label for="ledCustomW" data-i18n="lblCabW" class="block text-[11px] text-neutral-400 mb-1">Larghezza cabinet (px)</label>
+            <input type="number" id="ledCustomW" min="8" max="1024" value="200" class="led-num w-full bg-neutral-950 text-white border border-neutral-700 focus:border-red-600 focus:outline-none rounded-lg px-2.5 py-1.5 text-xs font-mono-tech">
+          </div>
+          <div>
+            <label for="ledCustomH" data-i18n="lblCabH" class="block text-[11px] text-neutral-400 mb-1">Altezza cabinet (px)</label>
+            <input type="number" id="ledCustomH" min="8" max="1024" value="200" class="led-num w-full bg-neutral-950 text-white border border-neutral-700 focus:border-red-600 focus:outline-none rounded-lg px-2.5 py-1.5 text-xs font-mono-tech">
+          </div>
+          <div>
+            <label for="ledCustomMmW" data-i18n="lblCabMmW" class="block text-[11px] text-neutral-400 mb-1">Larghezza (mm)</label>
+            <input type="number" id="ledCustomMmW" min="50" max="2000" value="500" class="led-num w-full bg-neutral-950 text-white border border-neutral-700 focus:border-red-600 focus:outline-none rounded-lg px-2.5 py-1.5 text-xs font-mono-tech">
+          </div>
+          <div>
+            <label for="ledCustomMmH" data-i18n="lblCabMmH" class="block text-[11px] text-neutral-400 mb-1">Altezza (mm)</label>
+            <input type="number" id="ledCustomMmH" min="50" max="2000" value="500" class="led-num w-full bg-neutral-950 text-white border border-neutral-700 focus:border-red-600 focus:outline-none rounded-lg px-2.5 py-1.5 text-xs font-mono-tech">
+          </div>
+        </div>
+      </div>
+
+      <!-- PROPOSTA B: 2. Muro -->
+      <div id="ledWallSec" class="hidden space-y-3 pb-4 border-b border-neutral-800/80">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-neutral-400 flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full bg-sky-500"></span>
+          <span data-i18n="secLed2">2. Muro LED</span>
+        </h2>
+        <div class="grid grid-cols-2 gap-2.5">
+          <div>
+            <label for="ledCols" data-i18n="lblCabCols" class="block text-[11px] text-neutral-400 mb-1">Cabinet orizzontali</label>
+            <div class="flex items-stretch gap-1">
+              <button type="button" data-step="ledCols:-1" class="led-step w-8 h-8 shrink-0 bg-neutral-950 hover:bg-neutral-800 border border-neutral-700 rounded-lg text-neutral-200 cursor-pointer" aria-label="meno">−</button>
+              <input type="number" id="ledCols" min="1" max="32" value="8" class="led-num w-full min-w-0 h-8 bg-neutral-950 text-white border border-neutral-700 focus:border-red-600 focus:outline-none rounded-lg px-2 text-center text-xs font-mono-tech font-bold">
+              <button type="button" data-step="ledCols:1" class="led-step w-8 h-8 shrink-0 bg-neutral-950 hover:bg-neutral-800 border border-neutral-700 rounded-lg text-neutral-200 cursor-pointer" aria-label="più">+</button>
+            </div>
+          </div>
+          <div>
+            <label for="ledRows" data-i18n="lblCabRows" class="block text-[11px] text-neutral-400 mb-1">Cabinet verticali</label>
+            <div class="flex items-stretch gap-1">
+              <button type="button" data-step="ledRows:-1" class="led-step w-8 h-8 shrink-0 bg-neutral-950 hover:bg-neutral-800 border border-neutral-700 rounded-lg text-neutral-200 cursor-pointer" aria-label="meno">−</button>
+              <input type="number" id="ledRows" min="1" max="32" value="4" class="led-num w-full min-w-0 h-8 bg-neutral-950 text-white border border-neutral-700 focus:border-red-600 focus:outline-none rounded-lg px-2 text-center text-xs font-mono-tech font-bold">
+              <button type="button" data-step="ledRows:1" class="led-step w-8 h-8 shrink-0 bg-neutral-950 hover:bg-neutral-800 border border-neutral-700 rounded-lg text-neutral-200 cursor-pointer" aria-label="più">+</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Riepilogo calcolato -->
+        <div id="ledSummary" class="bg-neutral-950/90 border border-neutral-800 rounded-lg p-2.5 space-y-2">
+          <div class="flex items-baseline justify-between gap-2">
+            <span data-i18n="sumRes" class="text-[11px] text-neutral-400">Risoluzione totale</span>
+            <span id="sumRes" class="font-mono-tech text-base font-bold text-white">1536 × 768 px</span>
+          </div>
+          <div class="flex items-baseline justify-between gap-2 -mt-1">
+            <span data-i18n="sumCabPx" class="text-[11px] text-neutral-400">Pixel per cabinet</span>
+            <span id="sumCabPx" class="font-mono-tech text-xs text-neutral-200">192 × 192 px · P2.6</span>
+          </div>
+          <div class="grid grid-cols-3 gap-1.5 text-[11px] font-mono-tech">
+            <div class="bg-neutral-900/80 border border-neutral-800 rounded-md px-1.5 py-1">
+              <div data-i18n="sumCab" class="text-[10px] text-neutral-400 font-sans">Cabinet</div>
+              <div id="sumCab" class="text-neutral-100 font-bold">32</div>
+            </div>
+            <div class="bg-neutral-900/80 border border-neutral-800 rounded-md px-1.5 py-1">
+              <div data-i18n="sumSize" class="text-[10px] text-neutral-400 font-sans">Misura</div>
+              <div id="sumSize" class="text-neutral-100 font-bold">4,00×2,00 m</div>
+            </div>
+            <div class="bg-neutral-900/80 border border-neutral-800 rounded-md px-1.5 py-1">
+              <div data-i18n="sumRatio" class="text-[10px] text-neutral-400 font-sans">Rapporto</div>
+              <div id="sumRatio" class="text-neutral-100 font-bold">2:1</div>
+            </div>
+          </div>
+          <svg id="ledMiniWall" class="w-full h-[56px] block" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
+          <div id="ledStatus" class="flex items-start gap-2 text-[11px] leading-snug">
+            <span id="ledStatusDot" class="mt-1 w-2 h-2 shrink-0 rounded-full bg-emerald-500"></span>
+            <span id="ledStatusTxt" class="text-neutral-300">Entro i limiti · ID A1–H4</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 text-xs text-neutral-300">
+          <label class="flex items-center gap-2 bg-neutral-950/70 p-2 rounded-lg border border-neutral-800/80 cursor-pointer min-h-[34px]">
+            <input type="checkbox" id="ledPixelGrid" class="rounded bg-neutral-900 border-neutral-700 text-red-600 focus:ring-0">
+            <span data-i18n="optPixGrid">Griglia pixel interna</span>
+          </label>
+          <select id="ledPixelStep" class="w-full bg-neutral-950 text-white border border-neutral-700 focus:border-red-600 focus:outline-none rounded-lg px-2 py-1.5 text-xs font-mono-tech cursor-pointer" aria-label="Passo griglia pixel">
+            <option value="8">ogni 8 px</option>
+            <option value="16" selected>ogni 16 px</option>
+            <option value="32">ogni 32 px</option>
+          </select>
+          <label for="ledSeam" data-i18n="lblSeam" class="self-center text-[11px] text-neutral-400">Bordo tra cabinet</label>
+          <select id="ledSeam" class="w-full bg-neutral-950 text-white border border-neutral-700 focus:border-red-600 focus:outline-none rounded-lg px-2 py-1.5 text-xs font-mono-tech cursor-pointer">
+            <option value="2">2 px</option>
+            <option value="4" selected>4 px</option>
+            <option value="6">6 px</option>
+          </select>
+        </div>
+      </div>
 
       <!-- 1. Formato & Risoluzione -->
       <div class="space-y-3 pb-4 border-b border-neutral-800/80">
@@ -391,6 +516,20 @@
           tipCanvas: 'Suggerimento: <strong class="text-neutral-200">clicca su qualsiasi cella</strong> nell\'anteprima per aggiungere o rimuovere repliche del logo DIAR.',
           exported: "Esportato!",
           cellWord: "Cella",
+          secMode: "Modalità", modeSurface: "Superficie", modeLed: "LED wall", modeMulti: "Multi-proiettore", soon: "in arrivo",
+          secLed1: "1. Pannello (cabinet)", secLed2: "2. Muro LED", lblCabW: "Larghezza cabinet (px)", lblCabH: "Altezza cabinet (px)",
+          lblCabMmW: "Larghezza (mm)", lblCabMmH: "Altezza (mm)", lblCabCols: "Cabinet orizzontali", lblCabRows: "Cabinet verticali",
+          sumRes: "Risoluzione totale", sumCab: "Cabinet", sumSize: "Misura", sumRatio: "Rapporto",
+          optPixGrid: "Griglia pixel interna", lblSeam: "Bordo tra cabinet", customCard: "Personalizzato",
+          okLimits: "Entro i limiti", errCols: "Massimo 32 colonne e 32 righe (le lettere arrivano ad AF).",
+          errPx: "Massimo 8192 px per lato: riduci i cabinet o scegli un pannello più piccolo.",
+          errMin: "Minimo 128 px per lato: aggiungi cabinet.", errStale: "L'anteprima mostra l'ultimo muro valido.",
+          customDims: "px L × A · mm", ariaLess: "Diminuisci", ariaMore: "Aumenta", ariaPixelStep: "Passo griglia pixel",
+          stepWord: "ogni", cabWord: "Cabinet", sumCabPx: "Pixel per cabinet",
+          errMinCab: "Serve almeno 1 cabinet per lato.", errColsMax: "Cabinet orizzontali oltre il massimo: 32 (le lettere arrivano ad AF).",
+          errRowsMax: "Cabinet verticali oltre il massimo: 32.", errCabPx: "Indica i pixel del cabinet (minimo 8 px).",
+          errMaxPx: "Risoluzione oltre 8192 px per lato: riduci i cabinet o scegli un pannello più piccolo.",
+          errSmallPx: "Risoluzione sotto 128 px per lato: aggiungi cabinet.",
           aspectOpts: {
             "16:9_h": "16:9 Orizzontale (Widescreen)",
             "16:9_v": "16:9 Verticale (Portrait / Totem)",
@@ -457,6 +596,20 @@
           tipCanvas: 'Tip: <strong class="text-neutral-200">click any cell</strong> on the preview canvas to add or remove extra DIAR logo markers.',
           exported: "Exported!",
           cellWord: "Cell",
+          secMode: "Mode", modeSurface: "Surface", modeLed: "LED wall", modeMulti: "Multi-projector", soon: "coming soon",
+          secLed1: "1. Panel (cabinet)", secLed2: "2. LED wall", lblCabW: "Cabinet width (px)", lblCabH: "Cabinet height (px)",
+          lblCabMmW: "Width (mm)", lblCabMmH: "Height (mm)", lblCabCols: "Cabinets across", lblCabRows: "Cabinets down",
+          sumRes: "Total resolution", sumCab: "Cabinets", sumSize: "Size", sumRatio: "Ratio",
+          optPixGrid: "Inner pixel grid", lblSeam: "Cabinet seam", customCard: "Custom",
+          okLimits: "Within limits", errCols: "Maximum 32 columns and 32 rows (letters go up to AF).",
+          errPx: "Maximum 8192 px per side: use fewer cabinets or a smaller panel.",
+          errMin: "Minimum 128 px per side: add cabinets.", errStale: "The preview shows the last valid wall.",
+          customDims: "px W × H · mm", ariaLess: "Decrease", ariaMore: "Increase", ariaPixelStep: "Pixel grid step",
+          stepWord: "every", cabWord: "Cabinet", sumCabPx: "Pixels per cabinet",
+          errMinCab: "At least 1 cabinet per side is required.", errColsMax: "Horizontal cabinets above the maximum: 32 (letters go up to AF).",
+          errRowsMax: "Vertical cabinets above the maximum: 32.", errCabPx: "Enter the cabinet pixels (minimum 8 px).",
+          errMaxPx: "Resolution above 8192 px per side: use fewer cabinets or a smaller panel.",
+          errSmallPx: "Resolution below 128 px per side: add cabinets.",
           aspectOpts: {
             "16:9_h": "16:9 Horizontal (Widescreen)",
             "16:9_v": "16:9 Vertical (Portrait / Totem)",
@@ -535,7 +688,8 @@
           itBtn.className = 'px-2 py-1 rounded-md text-neutral-400 hover:text-white cursor-pointer';
         }
 
-        document.getElementById('hoverCellInfo').textContent = `${dict.cellWord}: -- | Pixel: --, --`;
+        document.getElementById('hoverCellInfo').textContent = `${_ledActive ? dict.cabWord : dict.cellWord}: -- | Pixel: --, --`;
+        if (typeof _ledOnLang === 'function') _ledOnLang();
       }
 
       const canvas = document.getElementById('mappingCanvas');
@@ -594,6 +748,7 @@
       const grayPalette = ['#262626', '#404040', '#595959', '#737373', '#8C8C8C', '#A6A6A6', '#BFBFBF', '#D9D9D9'];
 
       let customToggledCells = new Set();
+      let _ledActive = false; // PROPOSTA B
 
       function gcd(a, b) {
         return b === 0 ? a : gcd(b, a % b);
@@ -921,6 +1076,8 @@
           _renderDiarEmblem(ctx, width / 2, height / 2, minCellDim * 0.85, 'stroke', 1);
         }
 
+        if (_ledActive) _ledDrawOverlay(ctx, width, height, cols, rows, cellW, cellH, isLightTheme);
+
         if (optDiagonals || optAxes) {
           ctx.save();
           ctx.strokeStyle = primaryLineColor;
@@ -1085,6 +1242,8 @@
           }
         }
 
+        if (_ledActive) _ledSvgOverlay(svg, width, height, cols, rows, cellW, cellH, isLightTheme);
+
         if (optDiagonals) {
           svg.push(`<line x1="0" y1="0" x2="${width}" y2="${height}" stroke="${primaryLineColor}" stroke-width="${baseLineThickness * 1.25}"/>`);
           svg.push(`<line x1="${width}" y1="0" x2="0" y2="${height}" stroke="${primaryLineColor}" stroke-width="${baseLineThickness * 1.25}"/>`);
@@ -1240,7 +1399,7 @@
         const r = Math.min(rows - 1, Math.max(0, Math.floor(py / (canvas.height / rows))));
 
         const cellName = `${getColumnLabel(c)}${r + 1}`;
-        const cw = _i18n[_currentLang].cellWord;
+        const cw = _ledActive ? _i18n[_currentLang].cabWord : _i18n[_currentLang].cellWord;
         document.getElementById('hoverCellInfo').textContent = `${cw}: ${cellName} | Pixel: ${px}, ${py}`;
       });
 
@@ -1413,6 +1572,13 @@
         clone.setAttribute('data-desktop-standalone', '1');
         const distBox = clone.querySelector('#desktopDistributionBox');
         if (distBox) distBox.remove();
+        // Il pacchetto si apre sempre in modalita' Superficie, anche se lo si scarica da LED wall
+        const q = (id) => clone.querySelector('#' + id);
+        [q('aspectPreset'), q('colsInput')].forEach(el => { const sec = el && el.closest('.space-y-3'); if (sec) sec.classList.remove('hidden'); });
+        ['ledPanelSec', 'ledWallSec'].forEach(id => { const el = q(id); if (el) el.classList.add('hidden'); });
+        ['colsInput', 'rowsInput'].forEach(id => { const el = q(id); if (el) el.setAttribute('min', '4'); });
+        if (q('modeSurfaceBtn')) q('modeSurfaceBtn').setAttribute('aria-pressed', 'true');
+        if (q('modeLedBtn')) q('modeLedBtn').setAttribute('aria-pressed', 'false');
         return '<!DOCTYPE html>\n' + clone.outerHTML;
       }
 
@@ -1694,10 +1860,252 @@
         }
       }
 
+      // ===== PROPOSTA B: Modalita' LED wall (guidata dal pannello fisico) =====
+      // Preset DIMOSTRATIVI, da confermare con Diego.
+      const _ledPresets = [
+        { id: 'p26', pitch: 'P2.6', mmW: 500, mmH: 500, w: 192, h: 192 },
+        { id: 'p29', pitch: 'P2.9', mmW: 500, mmH: 500, w: 168, h: 168 },
+        { id: 'p39', pitch: 'P3.9', mmW: 500, mmH: 500, w: 128, h: 128 },
+        { id: 'p39t', pitch: 'P3.9', mmW: 500, mmH: 1000, w: 128, h: 256 },
+        { id: 'custom', pitch: null }
+      ];
+      let _ledPanel = 'p26';
+      let _ledSaved = null;
+      const _led$ = (id) => document.getElementById(id);
+      const _sec1 = _led$('aspectPreset').closest('.space-y-3');
+      const _sec2 = _led$('colsInput').closest('.space-y-3');
+
+      function _ledPanelSpec() {
+        if (_ledPanel !== 'custom') return _ledPresets.find(p => p.id === _ledPanel);
+        return {
+          id: 'custom', pitch: null,
+          w: parseInt(_led$('ledCustomW').value) || 0, h: parseInt(_led$('ledCustomH').value) || 0,
+          mmW: parseInt(_led$('ledCustomMmW').value) || 0, mmH: parseInt(_led$('ledCustomMmH').value) || 0
+        };
+      }
+
+      function _ledRenderCards() {
+        const d = _i18n[_currentLang];
+        const box = _led$('ledCards');
+        box.innerHTML = '';
+        _ledPresets.forEach(p => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'led-card text-left bg-neutral-950 hover:bg-neutral-900 border border-neutral-800 hover:border-neutral-600 rounded-lg px-2.5 py-2 min-h-[52px] cursor-pointer transition-colors' + (p.id === 'custom' ? ' col-span-2 min-h-[36px] py-1.5' : '');
+          b.setAttribute('aria-pressed', String(p.id === _ledPanel));
+          if (p.id === 'custom') {
+            b.innerHTML = `<span class="led-pitch text-xs font-semibold text-neutral-300">${d.customCard}</span> <span class="text-[10px] font-mono-tech text-neutral-400">${d.customDims}</span>`;
+          } else {
+            const tall = p.mmH > p.mmW;
+            b.innerHTML =
+              `<div class="flex items-baseline justify-between"><span class="led-pitch font-mono-tech text-sm font-bold text-neutral-200">${p.pitch}</span>` +
+              `<span class="text-[10px] font-mono-tech text-neutral-400">${p.mmW}×${p.mmH} mm</span></div>` +
+              `<div class="flex items-center gap-1.5 mt-0.5"><span class="inline-block border border-neutral-500 rounded-[2px] ${tall ? 'w-1.5 h-3' : 'w-2.5 h-2.5'}"></span>` +
+              `<span class="text-[11px] font-mono-tech text-neutral-300">${p.w}×${p.h} px</span></div>`;
+          }
+          b.addEventListener('click', () => {
+            _ledPanel = p.id;
+            _led$('ledCustomWrap').classList.toggle('hidden', p.id !== 'custom');
+            _ledRenderCards();
+            _ledUpdate();
+          });
+          box.appendChild(b);
+        });
+      }
+
+      function _ledFmtM(mm) {
+        return (mm / 1000).toLocaleString(_currentLang === 'it' ? 'it-IT' : 'en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      }
+
+      function _ledMiniWall(cols, rows, spec, ok) {
+        const svg = _led$('ledMiniWall');
+        const cw = Math.max(1, spec.mmW || spec.w), ch = Math.max(1, spec.mmH || spec.h);
+        const c = Math.max(1, Math.min(cols, 64)), r = Math.max(1, Math.min(rows, 64));
+        const W = c * cw, H = r * ch;
+        svg.setAttribute('viewBox', `${-W * 0.01} ${-H * 0.02} ${W * 1.02} ${H * 1.04}`);
+        const sw = Math.max(W, H) / 220;
+        let s = `<rect x="0" y="0" width="${W}" height="${H}" fill="#0a0a0a" stroke="${ok ? '#a3a3a3' : '#f59e0b'}" stroke-width="${sw * 1.6}"/>`;
+        for (let i = 1; i < c; i++) s += `<line x1="${i * cw}" y1="0" x2="${i * cw}" y2="${H}" stroke="#525252" stroke-width="${sw}"/>`;
+        for (let j = 1; j < r; j++) s += `<line x1="0" y1="${j * ch}" x2="${W}" y2="${j * ch}" stroke="#525252" stroke-width="${sw}"/>`;
+        svg.innerHTML = s;
+      }
+
+      function _ledUpdate() {
+        if (!_ledActive) return;
+        const d = _i18n[_currentLang];
+        const spec = _ledPanelSpec();
+        const cols = parseInt(_led$('ledCols').value) || 0;
+        const rows = parseInt(_led$('ledRows').value) || 0;
+        const W = cols * spec.w, H = rows * spec.h;
+        const errs = [];
+        const badC = new Set();
+        if (spec.w < 8 || spec.h < 8) errs.push(d.errCabPx);
+        if (cols < 1 || rows < 1) { errs.push(d.errMinCab); if (cols < 1) badC.add('c'); if (rows < 1) badC.add('r'); }
+        if (cols > 32) { errs.push(d.errColsMax); badC.add('c'); }
+        if (rows > 32) { errs.push(d.errRowsMax); badC.add('r'); }
+        if (!errs.length) {
+          if (W > 8192 || H > 8192) { errs.push(`${d.errMaxPx} (${W} × ${H} px)`); if (W > 8192) badC.add('c'); if (H > 8192) badC.add('r'); }
+          else if (W < 128 || H < 128) { errs.push(`${d.errSmallPx} (${W} × ${H} px)`); if (W < 128) badC.add('c'); if (H < 128) badC.add('r'); }
+        }
+        const ok = errs.length === 0;
+
+        const g = gcd(W || 1, H || 1);
+        _led$('sumRes').textContent = `${W} × ${H} px`;
+        _led$('sumRes').className = 'font-mono-tech text-base font-bold ' + (ok ? 'text-white' : 'text-amber-400');
+        _led$('sumCabPx').textContent = `${spec.w} × ${spec.h} px${spec.pitch ? ' · ' + spec.pitch : ''}`;
+        _led$('sumCab').textContent = `${cols * rows}`;
+        _led$('sumSize').textContent = `${_ledFmtM(cols * spec.mmW)}×${_ledFmtM(rows * spec.mmH)} m`;
+        _led$('sumRatio').textContent = `${W / g}:${H / g}`;
+        _led$('ledSummary').className = 'rounded-lg p-2.5 space-y-2 border ' + (ok ? 'bg-neutral-950/90 border-neutral-800' : 'bg-red-950/40 border-red-800/70');
+        _led$('ledStatusDot').className = 'mt-1 w-2 h-2 shrink-0 rounded-full ' + (ok ? 'bg-emerald-500' : 'bg-amber-500');
+        _led$('ledStatusTxt').className = ok ? 'text-neutral-300' : 'text-amber-300 font-semibold';
+        const st = _led$('ledStatusTxt');
+        st.textContent = '';
+        (ok ? [`${d.okLimits} · ID A1–${getColumnLabel(cols - 1)}${rows}`] : errs.concat([d.errStale])).forEach((t, i, a) => {
+          const line = document.createElement('div');
+          line.textContent = t;
+          if (!ok && i === a.length - 1) line.className = 'text-neutral-300 font-normal';
+          st.appendChild(line);
+        });
+        _led$('ledCols').classList.toggle('led-bad', badC.has('c'));
+        _led$('ledRows').classList.toggle('led-bad', badC.has('r'));
+        _ledMiniWall(cols, rows, spec, ok);
+        if (!ok) return; // l'anteprima resta sull'ultimo muro valido
+
+        // Pilota il motore esistente: larghezza/altezza + colonne/righe, poi il suo render
+        _led$('customWidth').value = W;
+        _led$('customHeight').value = H;
+        _led$('colsInput').value = cols;
+        _led$('rowsInput').value = rows;
+        _led$('colsVal').textContent = cols;
+        _led$('rowsVal').textContent = rows;
+        renderAll();
+      }
+
+      // Disegnato dentro renderAll (solo in LED): griglia pixel e bordi cabinet marcati
+      function _ledDrawOverlay(ctx, width, height, cols, rows, cellW, cellH, isLight) {
+        ctx.save();
+        if (_led$('ledPixelGrid').checked) {
+          const step = parseInt(_led$('ledPixelStep').value) || 16;
+          ctx.strokeStyle = isLight ? 'rgba(0,0,0,0.16)' : 'rgba(255,255,255,0.16)';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          for (let c = 0; c < cols; c++) for (let x = step; x < cellW - 0.5; x += step) {
+            const px = Math.round(c * cellW + x) + 0.5; ctx.moveTo(px, 0); ctx.lineTo(px, height);
+          }
+          for (let r = 0; r < rows; r++) for (let y = step; y < cellH - 0.5; y += step) {
+            const py = Math.round(r * cellH + y) + 0.5; ctx.moveTo(0, py); ctx.lineTo(width, py);
+          }
+          ctx.stroke();
+        }
+        const seam = parseInt(_led$('ledSeam').value) || 4;
+        ctx.beginPath();
+        for (let c = 1; c < cols; c++) { ctx.moveTo(c * cellW, 0); ctx.lineTo(c * cellW, height); }
+        for (let r = 1; r < rows; r++) { ctx.moveTo(0, r * cellH); ctx.lineTo(width, r * cellH); }
+        ctx.strokeStyle = isLight ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.85)'; // alone
+        ctx.lineWidth = seam + 2;
+        ctx.stroke();
+        ctx.strokeStyle = isLight ? '#000000' : '#FFFFFF';
+        ctx.lineWidth = seam;
+        ctx.stroke();
+        ctx.restore();
+        const lbl = _currentLang === 'it' ? 'cabinet' : 'cabinets';
+        _led$('badgeInfo').textContent = `${cols * rows} ${lbl} · ${width}×${height} px`;
+      }
+
+      // Stessa sovrapposizione nell'export SVG (griglia pixel + bordi cabinet con alone)
+      function _ledSvgOverlay(svg, width, height, cols, rows, cellW, cellH, isLight) {
+        if (_led$('ledPixelGrid').checked) {
+          const step = parseInt(_led$('ledPixelStep').value) || 16;
+          const g = isLight ? 'rgba(0,0,0,0.16)' : 'rgba(255,255,255,0.16)';
+          for (let c = 0; c < cols; c++) for (let x = step; x < cellW - 0.5; x += step) {
+            const px = Math.round(c * cellW + x) + 0.5; svg.push(`<line x1="${px}" y1="0" x2="${px}" y2="${height}" stroke="${g}" stroke-width="1"/>`);
+          }
+          for (let r = 0; r < rows; r++) for (let y = step; y < cellH - 0.5; y += step) {
+            const py = Math.round(r * cellH + y) + 0.5; svg.push(`<line x1="0" y1="${py}" x2="${width}" y2="${py}" stroke="${g}" stroke-width="1"/>`);
+          }
+        }
+        const seam = parseInt(_led$('ledSeam').value) || 4;
+        [[isLight ? 'rgba(255,255,255,0.9)' : 'rgba(0,0,0,0.85)', seam + 2], [isLight ? '#000000' : '#FFFFFF', seam]].forEach(([col, w]) => {
+          for (let c = 1; c < cols; c++) svg.push(`<line class="led-seam" x1="${c * cellW}" y1="0" x2="${c * cellW}" y2="${height}" stroke="${col}" stroke-width="${w}"/>`);
+          for (let r = 1; r < rows; r++) svg.push(`<line class="led-seam" x1="0" y1="${r * cellH}" x2="${width}" y2="${r * cellH}" stroke="${col}" stroke-width="${w}"/>`);
+        });
+      }
+
+      function _ledSetMode(mode) {
+        const led = mode === 'led';
+        if (led === _ledActive) return;
+        if (led) {
+          _ledSaved = {
+            w: _led$('customWidth').value, h: _led$('customHeight').value,
+            cols: _led$('colsInput').value, rows: _led$('rowsInput').value,
+            aspect: _led$('aspectPreset').value, res: _led$('resolutionPreset').value,
+            resHidden: _led$('resolutionPresetWrap').classList.contains('hidden'),
+            auto: _led$('autoGridToggle').checked, sub: _led$('subGrid').value,
+            cells: new Set(customToggledCells)
+          };
+          ['colsInput', 'rowsInput'].forEach(id => _led$(id).min = '1');
+          _led$('subGrid').value = '0';
+          customToggledCells.clear();
+          updateResetButtonVisibility();
+        }
+        _ledActive = led;
+        _led$('modeSurfaceBtn').setAttribute('aria-pressed', String(!led));
+        _led$('modeLedBtn').setAttribute('aria-pressed', String(led));
+        _sec1.classList.toggle('hidden', led);
+        _sec2.classList.toggle('hidden', led);
+        _led$('ledPanelSec').classList.toggle('hidden', !led);
+        _led$('ledWallSec').classList.toggle('hidden', !led);
+        if (led) { _ledUpdate(); }
+        else if (_ledSaved) {
+          const s = _ledSaved;
+          ['colsInput', 'rowsInput'].forEach(id => _led$(id).min = '4');
+          _led$('customWidth').value = s.w; _led$('customHeight').value = s.h;
+          _led$('colsInput').value = s.cols; _led$('rowsInput').value = s.rows;
+          _led$('colsVal').textContent = s.cols; _led$('rowsVal').textContent = s.rows;
+          _led$('aspectPreset').value = s.aspect; _led$('resolutionPreset').value = s.res;
+          _led$('resolutionPresetWrap').classList.toggle('hidden', s.resHidden);
+          _led$('autoGridToggle').checked = s.auto; _led$('subGrid').value = s.sub;
+          customToggledCells = s.cells;
+          updateResetButtonVisibility();
+          renderAll();
+        }
+        document.getElementById('hoverCellInfo').textContent = `${_ledActive ? _i18n[_currentLang].cabWord : _i18n[_currentLang].cellWord}: -- | Pixel: --, --`;
+      }
+
+      function _ledOnLang() {
+        if (!_led$('ledCards')) return;
+        const d = _i18n[_currentLang];
+        _led$('modeMultiBtn').title = d.soon;
+        document.querySelectorAll('.led-step').forEach(b => b.setAttribute('aria-label', b.dataset.step.endsWith(':-1') ? d.ariaLess : d.ariaMore));
+        _led$('ledPixelStep').setAttribute('aria-label', d.ariaPixelStep);
+        Array.from(_led$('ledPixelStep').options).forEach(o => o.textContent = `${d.stepWord} ${o.value} px`);
+        _ledRenderCards();
+        if (_ledActive) _ledUpdate();
+      }
+
+      _led$('modeSurfaceBtn').addEventListener('click', () => _ledSetMode('surface'));
+      _led$('modeLedBtn').addEventListener('click', () => _ledSetMode('led'));
+      ['ledCols', 'ledRows', 'ledCustomW', 'ledCustomH', 'ledCustomMmW', 'ledCustomMmH'].forEach(id => _led$(id).addEventListener('input', _ledUpdate));
+      document.querySelectorAll('.led-step').forEach(b => b.addEventListener('click', () => {
+        const [id, delta] = b.dataset.step.split(':');
+        const el = _led$(id);
+        el.value = Math.max(1, (parseInt(el.value) || 0) + parseInt(delta));
+        _ledUpdate();
+      }));
+      ['ledPixelGrid', 'ledPixelStep', 'ledSeam'].forEach(id => _led$(id).addEventListener('change', renderAll));
+      _ledRenderCards();
+      // ===== fine PROPOSTA B =====
+
       // Avvio applicazione
       _applyLanguage(_currentLang);
       _initPWA();
       updateFormatUI();
+      // Le etichette del canvas usano JetBrains Mono: ridisegna appena il font e' caricato,
+      // cosi il primo export online non usa il font di ripiego.
+      if (document.fonts && document.fonts.load) {
+        document.fonts.load('bold 16px "JetBrains Mono"').then(() => renderAll(), () => {});
+      }
     })({}, {});
   </script>
 </body>
