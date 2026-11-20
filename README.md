@@ -3,7 +3,13 @@
 Pixel-perfect alphanumeric calibration grid and vector test card generator for projection mapping, LED walls, and live event production.
 
 Live Web Application: https://diarsrl.github.io/DIAR-Mapping-Card-Studio/
+## Preview & Examples
 
+![DIAR Mapping Card Studio Preview](preview.png)
+
+| Example 01 | Example 02 |
+| :---: | :---: |
+| ![Preview 01](preview_01.png) | ![Example 02](example_02.png) |
 ## Overview
 
 DIAR Mapping Card Studio generates mathematically accurate calibration patterns directly in the browser. It is designed for AV technicians, media server operators, and visual artists working with Resolume Arena, MadMapper, TouchDesigner, Disguise, or Millumin.
