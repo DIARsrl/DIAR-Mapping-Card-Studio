@@ -3,6 +3,8 @@
 Pixel-perfect alphanumeric calibration grid and vector test card generator for projection mapping, LED walls, and live event production.
 
 Live Web Application: https://diarsrl.github.io/DIAR-Mapping-Card-Studio/
+
+Version: 2.0
 ## Preview & Examples
 
 ![DIAR Mapping Card Studio Preview](preview.png)
@@ -21,7 +23,7 @@ DIAR Mapping Card Studio generates mathematically accurate calibration patterns 
 - Interactive Markers: Click any cell on the preview canvas to add or remove extra DIAR alignment markers while keeping the center reference locked.
 - Export Formats: Direct client-side export in high-resolution PNG and scalable pure vector SVG.
 - Localization: Automatic browser language detection (English and Italian) with manual switch.
-- Offline Packages: Installable as a Progressive Web App (PWA) or downloadable as standalone Windows and macOS offline packages.
+- Offline Packages: Downloadable as standalone Windows and macOS packages that work without internet access. Also installable as a Progressive Web App (PWA), which requires a connection.
 
 ## Usage
 
@@ -29,6 +31,8 @@ DIAR Mapping Card Studio generates mathematically accurate calibration patterns 
 2. Select the target aspect ratio and output resolution.
 3. Configure grid subdivision, optical overlays, and background color mode (calibrated multicolor, IRE grayscale, pure black, or pure white).
 4. Export the calibration card as SVG or PNG, or download the offline desktop package for show-site use without internet access.
+
+If Windows, an antivirus or macOS Gatekeeper blocks the package launcher, open `app/index.html` directly in your browser: it works the same, offline.
 
 ## License and Attribution
 License: Creative Commons Attribution-NoDerivatives 4.0 International (CC BY-ND 4.0)
